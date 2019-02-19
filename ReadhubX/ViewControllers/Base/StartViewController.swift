@@ -39,22 +39,22 @@ class StartViewController: UIViewController {
     
     private func layoutPageSubviews() {
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(width_large_button_space)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(width_large_button_space_34)
             make.centerX.equalToSuperview()
             make.height.equalTo(20)
         }
         
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(width_large_button_space)
+            make.top.equalTo(titleLabel.snp.bottom).offset(width_large_button_space_34)
             make.left.right.equalToSuperview()
             make.bottom.equalTo(startButton.top).offset(20)
         }
         
         startButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-width_large_button_space)
-            make.left.equalToSuperview().offset(width_large_button_space)
-            make.right.equalToSuperview().offset(-width_large_button_space)
-            make.height.equalTo(height_large_button)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-width_large_button_space_34)
+            make.left.equalToSuperview().offset(width_large_button_space_34)
+            make.right.equalToSuperview().offset(-width_large_button_space_34)
+            make.height.equalTo(height_large_button_47)
         }
     }
     
@@ -78,7 +78,6 @@ class StartViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
-        UITableViewCell.appearance().selectionStyle = .none
         
         tableView.register(StartCell.self, forCellReuseIdentifier: "cell")
         
@@ -93,7 +92,7 @@ class StartViewController: UIViewController {
         button.setBackgroundImage(UIImage.imageWithColor(color: color_theme_button_press), for: .highlighted)
         button.titleLabel?.font = font_18
         button.setTitleColor(color_ffffff, for: .normal)
-        button.layer.cornerRadius = corner_large_button
+        button.layer.cornerRadius = corner_large_button_5
         button.layer.masksToBounds = true
         button.setTitle("开始使用", for: .normal)
         button.addTarget(self, action: #selector(clickStartButton), for: .touchUpInside)

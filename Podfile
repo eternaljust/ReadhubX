@@ -9,6 +9,7 @@ target 'ReadhubX' do
   
   # Pods for ReadhubX
   pod 'SnapKit'
+  pod 'Alamofire'
   
   target 'ReadhubXTests' do
     inherit! :search_paths

@@ -94,27 +94,27 @@ let APP_ID = Bundle.main.infoDictionary!["CFBundleIdentifier"]
 
 // MARK: widht height corner
 /// 大按钮的左右间距 34
-let width_large_button_space: CGFloat = 34
+let width_large_button_space_34: CGFloat = 34
 /// 列表的左右间距 15
-let width_list_space: CGFloat = 15
+let width_list_space_15: CGFloat = 15
 /// 中按钮宽度最小 180
-let width_medium_button: CGFloat = 180
+let width_medium_button_180: CGFloat = 180
 /// 小按钮宽度最小 60
-let width_small_button: CGFloat = 60
+let width_small_button_60: CGFloat = 60
 
 /// 大按钮的固定高度 47
-let height_large_button = 47
+let height_large_button_47 = 47
 /// 中按钮的固定高度 35
-let height_medium_button = 35
+let height_medium_button_35 = 35
 /// 小按钮的固定高度 30
-let height_small_button = 30
+let height_small_button_30 = 30
 
 /// 大按钮的圆角大小 5
-let corner_large_button: CGFloat = 5
+let corner_large_button_5: CGFloat = 5
 /// 中按钮的圆角大小 4
-let corner_medium_button = 4
+let corner_medium_button_4 = 4
 /// 小按钮的圆角大小 3
-let corner_small_button = 3
+let corner_small_button_3 = 3
 
 // MARK: - color
 /// 白色

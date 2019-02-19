@@ -39,7 +39,9 @@ class TabBarViewController: UITabBarController {
 
         // 导航栏 naviBar
         let naviBar = UINavigationBar.appearance();
+        
         naviBar.barTintColor = color_ffffff
+        naviBar.titleTextAttributes = [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_20, NSAttributedString.Key.foregroundColor: color_000000]
         
         // tableView cell 选中效果
         UITableViewCell.appearance().selectionStyle = .none

@@ -32,13 +32,13 @@ class StartCell: UITableViewCell {
     
     private func layoutPageSubviews() {
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(width_list_space)
-            make.left.equalToSuperview().offset(width_large_button_space)
+            make.top.equalToSuperview().offset(width_list_space_15)
+            make.left.equalToSuperview().offset(width_large_button_space_34)
             make.height.equalTo(17)
         }
 
         infoLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(width_list_space)
+            make.top.equalTo(titleLabel.snp.bottom).offset(width_list_space_15)
             make.left.equalTo(titleLabel)
             make.height.equalTo(14)
         }

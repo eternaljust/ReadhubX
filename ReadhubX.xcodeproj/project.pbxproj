@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81806D05221BF07A00DA827D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81806D04221BF07A00DA827D /* NewsModel.swift */; };
 		81C13E07221A4A39000A017B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C13E06221A4A39000A017B /* AppDelegate.swift */; };
 		81C13E0E221A4A3D000A017B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C13E0D221A4A3D000A017B /* Assets.xcassets */; };
 		81C13E11221A4A3D000A017B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81C13E0F221A4A3D000A017B /* LaunchScreen.storyboard */; };
@@ -58,6 +59,7 @@
 		38F4F82D8A46E2A972BDE62A /* Pods-ReadhubXUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadhubXUITests.debug.xcconfig"; path = "Target Support Files/Pods-ReadhubXUITests/Pods-ReadhubXUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5059A493E8EB9E65579F0EC4 /* Pods_ReadhubXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReadhubXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CD83F1E8F27B48C60CAF021 /* Pods_ReadhubXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReadhubXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81806D04221BF07A00DA827D /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		81C13E03221A4A39000A017B /* ReadhubX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReadhubX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C13E06221A4A39000A017B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81C13E0D221A4A3D000A017B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				81F3BF14221AE90D0069DD7F /* BaseModel.swift */,
+				81806D04221BF07A00DA827D /* NewsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -543,12 +546,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ReadhubX/Pods-ReadhubX-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,6 +576,7 @@
 				81F3BF0F221ABEDF0069DD7F /* NewsCell.swift in Sources */,
 				81F3BF09221ABE9A0069DD7F /* NewsViewController.swift in Sources */,
 				81F3BF0D221ABEC00069DD7F /* TopicCell.swift in Sources */,
+				81806D05221BF07A00DA827D /* NewsModel.swift in Sources */,
 				81F3BEF6221A89C70069DD7F /* NetworkService.swift in Sources */,
 				81F3BF05221AAFFF0069DD7F /* StartCell.swift in Sources */,
 				81F3BF13221ABF900069DD7F /* TabBarViewController.swift in Sources */,
