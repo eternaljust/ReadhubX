@@ -1,20 +1,32 @@
 PODS:
   - Alamofire (4.8.1)
+  - EmptyDataSet-Swift (4.2.0)
+  - GTMRefresh (1.3.6)
+  - PKHUD (5.2.1)
   - SnapKit (4.2.0)
 
 DEPENDENCIES:
   - Alamofire
+  - EmptyDataSet-Swift
+  - GTMRefresh
+  - PKHUD
   - SnapKit
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - EmptyDataSet-Swift
+    - GTMRefresh
+    - PKHUD
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
+  GTMRefresh: 9231cbdc1dca88d0a29daead8d6bd83314aa84dc
+  PKHUD: 4e6162c4c39ac367c6934e9855c6b4762ee16256
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: b5ec371fde3e5567168fee3bca3a4b41917afd2b
+PODFILE CHECKSUM: e8c266c1b041d9831a5fbff6a269aab62bd67492
 
 COCOAPODS: 1.6.0

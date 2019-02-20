@@ -45,6 +45,7 @@ class StartCell: UITableViewCell {
     }
     
     // MARK: - setter getter
+    /// 标题
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         
@@ -54,6 +55,7 @@ class StartCell: UITableViewCell {
         return label
     }()
     
+    /// 详细描述
     lazy var infoLabel: UILabel = {
         let label = UILabel()
         

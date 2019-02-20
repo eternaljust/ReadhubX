@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PKHUD
 
 class TabBarViewController: UITabBarController {
     // MARK: - life cycle
@@ -15,9 +16,14 @@ class TabBarViewController: UITabBarController {
 
         setupTabBar()
         setAppearance()
+        globalConfig()
     }
 
     // MARK: - private method
+    private func globalConfig() {
+        HUD.dimsBackground = false
+    }
+    
     private func setAppearance() {
         // tabBar
         let tabBar = UITabBar.appearance();
@@ -45,9 +51,6 @@ class TabBarViewController: UITabBarController {
         
         // tableView cell 选中效果
         UITableViewCell.appearance().selectionStyle = .none
-        UITableView.appearance().estimatedRowHeight = 0;
-        UITableView.appearance().estimatedSectionFooterHeight = 0;
-        UITableView.appearance().estimatedSectionHeaderHeight = 0;
     }
 
     private func setupTabBar() {

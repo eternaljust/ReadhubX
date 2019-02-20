@@ -10,6 +10,9 @@ target 'ReadhubX' do
   # Pods for ReadhubX
   pod 'SnapKit'
   pod 'Alamofire'
+  pod 'GTMRefresh'
+  pod 'EmptyDataSet-Swift'
+  pod 'PKHUD'
   
   target 'ReadhubXTests' do
     inherit! :search_paths

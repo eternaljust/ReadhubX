@@ -7,6 +7,60 @@
 //
 
 import UIKit
+import Foundation
+
+extension String {
+    func date() -> Date? {
+        let dateformatter = DateFormatter()
+        
+        dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'.000Z'"
+        
+        return dateformatter.date(from: self)
+    }
+    
+    func timeStamp() -> String {
+        let time: TimeInterval = self.date()!.timeIntervalSince1970 * 1000
+        
+        return "\(time)"
+    }
+    
+    /// 根据时间戳返回几分钟前，几小时前，几天前
+    public static func currennTime(timeStamp: Double) -> String {
+        // 获取当前的时间戳
+        let currentTime = Date().timeIntervalSince1970
+        // readhub 发时间布的时差（8 小时）
+        let e: TimeInterval = (8 * 60 * 60)
+        
+        // 时间戳为毫秒级
+        let timeSta: TimeInterval = timeStamp + e
+        // 时间差
+        let reduceTime: TimeInterval = currentTime - timeSta
+        // 时间差小于60秒
+        if reduceTime < 60 {
+            return "刚刚"
+        }
+        // 时间差大于一分钟小于60分钟内
+        let mins = Int(reduceTime / 60)
+        if mins < 60 {
+            return "\(mins)分钟前"
+        }
+        let hours = Int(reduceTime / 3600)
+        if hours < 24 {
+            return "\(hours)小时前"
+        }
+        let days = Int(reduceTime / 3600 / 24)
+        if days < 30 {
+            return "\(days)天前"
+        }
+        // 不满足上述条件---或者是未来日期-----直接返回日期
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        let dfmatter = DateFormatter()
+        // yyyy-MM-dd HH:mm:ss
+        dfmatter.dateFormat="yyyy-MM-dd HH:mm:ss"
+        
+        return dfmatter.string(from: date as Date)
+    }
+}
 
 extension String {
     /// 是否为手机号

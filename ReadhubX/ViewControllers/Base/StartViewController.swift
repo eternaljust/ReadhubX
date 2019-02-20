@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-typealias startCompletion = () -> ()
+typealias startCompletion = () -> Void
 
 class StartViewController: UIViewController {
     // MARK: - proporty
@@ -21,6 +21,11 @@ class StartViewController: UIViewController {
         
         setupUI()
         layoutPageSubviews()
+    }
+    
+    // 禁用屏幕旋转
+    override var shouldAutorotate: Bool {
+        return false
     }
     
     // MARK: - event response

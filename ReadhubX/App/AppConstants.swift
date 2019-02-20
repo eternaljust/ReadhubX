@@ -103,18 +103,18 @@ let width_medium_button_180: CGFloat = 180
 let width_small_button_60: CGFloat = 60
 
 /// 大按钮的固定高度 47
-let height_large_button_47 = 47
+let height_large_button_47: CGFloat = 47
 /// 中按钮的固定高度 35
-let height_medium_button_35 = 35
+let height_medium_button_35: CGFloat = 35
 /// 小按钮的固定高度 30
-let height_small_button_30 = 30
+let height_small_button_30: CGFloat = 30
 
 /// 大按钮的圆角大小 5
 let corner_large_button_5: CGFloat = 5
 /// 中按钮的圆角大小 4
-let corner_medium_button_4 = 4
+let corner_medium_button_4: CGFloat = 4
 /// 小按钮的圆角大小 3
-let corner_small_button_3 = 3
+let corner_small_button_3: CGFloat = 3
 
 // MARK: - color
 /// 白色
@@ -141,7 +141,7 @@ let color_e64340_10 = HEXA(0xe64340, 0.1)
 /// 主题颜色
 let color_theme = color_436a90
 /// 警告颜色
-let color_red = color_436a90
+let color_red = color_e64340
 /// 页面背景颜色
 let color_background = HEX(0xf6f6f6)
 /// 下划线颜色

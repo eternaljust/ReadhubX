@@ -22,19 +22,21 @@ open class NetworkService<T: Codable> {
         }
         
         Alamofire.request(url).responseData { response in
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-
-            if let data = response.data {
-                let decoder = JSONDecoder()
-                do {
-                    let jsonModel = try decoder.decode(T.self, from: data)
-                    
-                    self.completionJSONClosure(jsonModel, "成功！", true)
-                } catch {
-                    self.completionJSONClosure(nil, "数据错误！", false)
-                }
-            } else {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            // 网络响应处理
+            if (response.error != nil) {
                 self.completionJSONClosure(nil, response.error?.localizedDescription, false)
+            } else {
+                if let data = response.data {
+                    let decoder = JSONDecoder()
+                    do {
+                        let jsonModel = try decoder.decode(T.self, from: data)
+                        
+                        self.completionJSONClosure(jsonModel, "成功！", true)
+                    } catch {
+                        self.completionJSONClosure(nil, "数据错误！", false)
+                    }
+                }
             }
         }
     }
