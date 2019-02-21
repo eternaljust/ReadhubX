@@ -9,6 +9,7 @@
 import UIKit
 import PKHUD
 
+/// tabBarViewController 
 class TabBarViewController: UITabBarController {
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -40,17 +41,19 @@ class TabBarViewController: UITabBarController {
         /// 导航栏左右的 item 字体颜色
         let barButtonItem = UIBarButtonItem.appearance()
 
-        barButtonItem.setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_17, NSAttributedString.Key.foregroundColor: color_000000], for: .normal)
-        barButtonItem.setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_17, NSAttributedString.Key.foregroundColor: color_000000], for: .highlighted)
+        barButtonItem.tintColor = color_theme
+        barButtonItem.setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_17, NSAttributedString.Key.foregroundColor: color_theme], for: .normal)
+        barButtonItem.setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_17, NSAttributedString.Key.foregroundColor: color_theme], for: .highlighted)
 
         // 导航栏 naviBar
         let naviBar = UINavigationBar.appearance();
         
         naviBar.barTintColor = color_ffffff
-        naviBar.titleTextAttributes = [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_20, NSAttributedString.Key.foregroundColor: color_000000]
+        naviBar.titleTextAttributes = [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_20, NSAttributedString.Key.foregroundColor: color_theme]
         
         // tableView cell 选中效果
         UITableViewCell.appearance().selectionStyle = .none
+        UISwitch.appearance().onTintColor = color_theme
     }
 
     private func setupTabBar() {
@@ -77,7 +80,7 @@ class TabBarViewController: UITabBarController {
         // 图片居中显示，不显示文字
         let offset: CGFloat = iPad ? 0 : 5
         childController.tabBarItem.imageInsets = UIEdgeInsets(top: offset, left: 0, bottom: -offset, right: 0)
-        let nav = UINavigationController.init(rootViewController: childController)
+        let nav = NavigationViewController.init(rootViewController: childController)
         
         addChild(nav)
     }

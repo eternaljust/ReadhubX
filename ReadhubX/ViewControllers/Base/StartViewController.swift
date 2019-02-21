@@ -9,10 +9,18 @@
 import UIKit
 import SnapKit
 
-typealias startCompletion = () -> Void
-
+/// 开始使用 ViewController
 class StartViewController: UIViewController {
-    // MARK: - proporty
+    /// 列表 item
+    struct StartItem {
+        /// 标题
+        var title: String
+        /// 详细描述
+        var info: String
+    }
+    
+    typealias startCompletion = () -> Void
+    // 开始按钮点击回调
     var callBack: startCompletion?
     
     // MARK: - life cycle
@@ -21,11 +29,6 @@ class StartViewController: UIViewController {
         
         setupUI()
         layoutPageSubviews()
-    }
-    
-    // 禁用屏幕旋转
-    override var shouldAutorotate: Bool {
-        return false
     }
     
     // MARK: - event response
@@ -52,7 +55,7 @@ class StartViewController: UIViewController {
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(width_large_button_space_34)
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(startButton.top).offset(20)
+            make.bottom.equalTo(startButton.snp.top).offset(-width_large_button_space_34)
         }
         
         startButton.snp.makeConstraints { (make) in
@@ -64,6 +67,7 @@ class StartViewController: UIViewController {
     }
     
     // MARK: - setter getter
+    /// 标题
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
@@ -74,6 +78,7 @@ class StartViewController: UIViewController {
         return label
     }()
     
+    /// 列表视图
     private lazy var tableView: UITableView = {
         let tableView = UITableView.init(frame: .zero, style: .plain)
         
@@ -82,13 +87,14 @@ class StartViewController: UIViewController {
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
+        tableView.showsVerticalScrollIndicator = false
         
         tableView.register(StartCell.self, forCellReuseIdentifier: "cell")
         
         return tableView
     }()
     
+    /// 开始按钮
     private lazy var startButton: UIButton = {
         let button = UIButton(type: .custom)
         
@@ -105,27 +111,35 @@ class StartViewController: UIViewController {
         return button
     }()
     
-    private lazy var dataSource : [Dictionary] = {
-        return [ [ "title" : "热门话题", "info" : "互联网行业里发生的" ], [ "title" : "科技动态", "info" : "互联网行业里发生的" ], [ "title" : "开发者资讯", "info" : "互联网行业里发生的" ], [ "title" : "区块链快讯", "info" : "互联网行业里发生的" ], ]
+    /// 列表数据源
+    private lazy var dataSource : [StartItem] = {
+        return [ StartItem(title: "热门话题", info: "互联网行业里发生的"),
+                 StartItem(title: "科技动态", info: "互联网行业里发生的"),
+                 StartItem(title: "开发者资讯", info: "互联网行业里发生的"),
+                 StartItem(title: "区块链快讯", info: "互联网行业里发生的")
+        ]
     }()
 }
 
-extension StartViewController: UITableViewDataSource, UITableViewDelegate {
-    // MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
+extension StartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: StartCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! StartCell
+        let item = dataSource[indexPath.row]
         
-        cell.titleLabel.text = dataSource[indexPath.row]["title"]
-        cell.infoLabel.text = dataSource[indexPath.row]["info"]
+        cell.titleLabel.text = item.title
+        cell.infoLabel.text = item.info
 
         return cell
     }
-    
-    // MARK: - UITableViewDelegate
+}
+
+// MARK: - UITableViewDelegate
+extension StartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 77
     }

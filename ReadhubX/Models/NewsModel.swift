@@ -8,9 +8,11 @@
 
 import UIKit
 
+/// 新闻资讯动态列表 model
 struct NewsList : Codable {
     let data: [News]
     
+    /// 资讯详细 model
     struct News: Codable {
         /// 资讯标题
         var title: String
@@ -23,6 +25,8 @@ struct NewsList : Codable {
         /// 资讯发布时间
         var publishDate: String = ""
         /// 资讯手机端链接
-        var mobileUrl: String = ""
+        var mobileUrl: String = "https://www.readhub.cn/news"
+        /// 资讯新闻语言（zh-cn：中文 en：英文）
+        var language: String = "en"
     }
 }

@@ -86,11 +86,11 @@ let naviBarHeightFunc: () -> CGFloat = {
 let naviBarHeight: CGFloat = naviBarHeightFunc()
 
 /// 系统版本号
-let APP_VERSION = Bundle.main.infoDictionary!["CFBundleShortVersionString"]
+let APP_VERSION: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
 /// 系统构建版本
-let APP_BUILD = Bundle.main.infoDictionary!["CFBundleVersion"]
+let APP_BUILD: String = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
 /// App 的 bundle id 标识
-let APP_ID = Bundle.main.infoDictionary!["CFBundleIdentifier"]
+let APP_ID: String = Bundle.main.infoDictionary!["CFBundleIdentifier"] as! String
 
 // MARK: widht height corner
 /// 大按钮的左右间距 34
@@ -177,3 +177,15 @@ let font_11 = FONT(11)
 
 /// 空字符串
 let kNilValue = ""
+
+/// App 相关的配置
+struct AppConfig {
+    /// URL Schemes
+    static var URLScheme: String = "readhubx"
+    /// 收件人邮箱
+    static var receiverEmail: String = "eternal.just@gmail.com"
+    /// 关于 Readhub 介绍
+    static var readhubIntroURL: String = "https://mp.weixin.qq.com/s?__biz=MjM5ODIyMTE0MA==&mid=2650969398&idx=1&sn=70c44b9bb994d9a8d98453b97555890b"
+    /// 项目源码
+    static var appRepository: String = "https://github.com/tzqiang/ReadhubX"
+}

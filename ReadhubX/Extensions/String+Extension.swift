@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 extension String {
+    /// 字符串转 date
     func date() -> Date? {
         let dateformatter = DateFormatter()
         
@@ -18,6 +19,7 @@ extension String {
         return dateformatter.date(from: self)
     }
     
+    /// 字符串转时间戳
     func timeStamp() -> String {
         let time: TimeInterval = self.date()!.timeIntervalSince1970 * 1000
         
@@ -95,7 +97,7 @@ extension String {
         return isMatch(regEx: "^[0-9]+(\\.[0-9]{0,2})?$")
     }
     
-    public func isMatch(regEx: String) -> Bool {
+    private func isMatch(regEx: String) -> Bool {
         return NSPredicate(format: "SELF MATCHES %@", regEx).evaluate(with: self)
     }
 }

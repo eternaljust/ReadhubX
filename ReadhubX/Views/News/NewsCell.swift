@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// 资讯 cell
 class NewsCell: UITableViewCell {
     // MARK: - instance
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -79,7 +80,7 @@ class NewsCell: UITableViewCell {
         let label = UILabel()
         
         label.font = font_14
-        label.textColor = color_353535
+        label.textColor = color_888888
         
         return label
     }()

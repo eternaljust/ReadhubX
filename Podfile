@@ -13,6 +13,7 @@ target 'ReadhubX' do
   pod 'GTMRefresh'
   pod 'EmptyDataSet-Swift'
   pod 'PKHUD'
+  pod 'JXSegmentedView'
   
   target 'ReadhubXTests' do
     inherit! :search_paths

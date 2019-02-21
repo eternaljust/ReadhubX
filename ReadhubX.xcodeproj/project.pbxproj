@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8105F8E6221E4914001E3867 /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8E5221E4914001E3867 /* NewsListViewController.swift */; };
+		8105F8E8221E56E2001E3867 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8E7221E56E2001E3867 /* UIViewController+Extension.swift */; };
+		8105F8EA221EA45B001E3867 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8E9221EA45B001E3867 /* AboutViewController.swift */; };
+		8105F8EC221EA4A8001E3867 /* AboutHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8EB221EA4A8001E3867 /* AboutHeaderView.swift */; };
+		8105F8EE221EB12D001E3867 /* BaseSafariViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8ED221EB12D001E3867 /* BaseSafariViewController.swift */; };
+		8105F8F0221EC838001E3867 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8EF221EC838001E3867 /* NavigationViewController.swift */; };
+		8105F8F2221ECFFA001E3867 /* URLSchemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */; };
+		8105F8F4221ED01A001E3867 /* PodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8F3221ED01A001E3867 /* PodsViewController.swift */; };
 		81806D05221BF07A00DA827D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81806D04221BF07A00DA827D /* NewsModel.swift */; };
 		81C13E07221A4A39000A017B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C13E06221A4A39000A017B /* AppDelegate.swift */; };
 		81C13E0E221A4A3D000A017B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C13E0D221A4A3D000A017B /* Assets.xcassets */; };
@@ -59,6 +67,14 @@
 		38F4F82D8A46E2A972BDE62A /* Pods-ReadhubXUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadhubXUITests.debug.xcconfig"; path = "Target Support Files/Pods-ReadhubXUITests/Pods-ReadhubXUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5059A493E8EB9E65579F0EC4 /* Pods_ReadhubXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReadhubXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CD83F1E8F27B48C60CAF021 /* Pods_ReadhubXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReadhubXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8105F8E5221E4914001E3867 /* NewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListViewController.swift; sourceTree = "<group>"; };
+		8105F8E7221E56E2001E3867 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		8105F8E9221EA45B001E3867 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		8105F8EB221EA4A8001E3867 /* AboutHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutHeaderView.swift; sourceTree = "<group>"; };
+		8105F8ED221EB12D001E3867 /* BaseSafariViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSafariViewController.swift; sourceTree = "<group>"; };
+		8105F8EF221EC838001E3867 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemesViewController.swift; sourceTree = "<group>"; };
+		8105F8F3221ED01A001E3867 /* PodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodsViewController.swift; sourceTree = "<group>"; };
 		81806D04221BF07A00DA827D /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		81C13E03221A4A39000A017B /* ReadhubX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReadhubX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C13E06221A4A39000A017B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -210,6 +226,7 @@
 				81F3BEEC221A6A130069DD7F /* JSON.swift */,
 				81F3BEEE221A85190069DD7F /* UIView+Extension.swift */,
 				81F3BEF0221A86FB0069DD7F /* UIImage+Extension.swift */,
+				8105F8E7221E56E2001E3867 /* UIViewController+Extension.swift */,
 				81F3BEF2221A87970069DD7F /* String+Extension.swift */,
 			);
 			path = Extensions;
@@ -246,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				81F3BF08221ABE9A0069DD7F /* NewsViewController.swift */,
+				8105F8E5221E4914001E3867 /* NewsListViewController.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -254,6 +272,9 @@
 			isa = PBXGroup;
 			children = (
 				81F3BF0A221ABEA70069DD7F /* MoreViewController.swift */,
+				8105F8E9221EA45B001E3867 /* AboutViewController.swift */,
+				8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */,
+				8105F8F3221ED01A001E3867 /* PodsViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -263,6 +284,8 @@
 			children = (
 				81F3BF01221A8D100069DD7F /* StartViewController.swift */,
 				81F3BF12221ABF900069DD7F /* TabBarViewController.swift */,
+				8105F8ED221EB12D001E3867 /* BaseSafariViewController.swift */,
+				8105F8EF221EC838001E3867 /* NavigationViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -282,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				81F3BF10221ABEEB0069DD7F /* MoreCell.swift */,
+				8105F8EB221EA4A8001E3867 /* AboutHeaderView.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -549,6 +573,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/EmptyDataSet-Swift/EmptyDataSet_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMRefresh/GTMRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/JXSegmentedView/JXSegmentedView.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
@@ -559,6 +584,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmptyDataSet_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXSegmentedView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
@@ -575,8 +601,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F3BF15221AE90D0069DD7F /* BaseModel.swift in Sources */,
+				8105F8F2221ECFFA001E3867 /* URLSchemesViewController.swift in Sources */,
 				81F3BEF3221A87970069DD7F /* String+Extension.swift in Sources */,
+				8105F8EA221EA45B001E3867 /* AboutViewController.swift in Sources */,
+				8105F8F0221EC838001E3867 /* NavigationViewController.swift in Sources */,
 				81F3BF0B221ABEA70069DD7F /* MoreViewController.swift in Sources */,
+				8105F8F4221ED01A001E3867 /* PodsViewController.swift in Sources */,
 				81F3BEEF221A85190069DD7F /* UIView+Extension.swift in Sources */,
 				81F3BEF1221A86FB0069DD7F /* UIImage+Extension.swift in Sources */,
 				81F3BF0F221ABEDF0069DD7F /* NewsCell.swift in Sources */,
@@ -589,7 +619,11 @@
 				81F3BF02221A8D100069DD7F /* StartViewController.swift in Sources */,
 				81F3BEED221A6A130069DD7F /* JSON.swift in Sources */,
 				81F3BEE8221A66DF0069DD7F /* AppConstants.swift in Sources */,
+				8105F8EC221EA4A8001E3867 /* AboutHeaderView.swift in Sources */,
+				8105F8EE221EB12D001E3867 /* BaseSafariViewController.swift in Sources */,
+				8105F8E6221E4914001E3867 /* NewsListViewController.swift in Sources */,
 				81F3BF11221ABEEB0069DD7F /* MoreCell.swift in Sources */,
+				8105F8E8221E56E2001E3867 /* UIViewController+Extension.swift in Sources */,
 				81F3BEEA221A67110069DD7F /* AppAPI.swift in Sources */,
 				81C13E07221A4A39000A017B /* AppDelegate.swift in Sources */,
 				81F3BF07221ABE900069DD7F /* TopicViewController.swift in Sources */,

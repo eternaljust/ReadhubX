@@ -8,11 +8,14 @@
 
 import UIKit
 
+/// 开始使用 cell
 class StartCell: UITableViewCell {
     // MARK: - instance
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        self.selectionStyle = .none
+        
         setupUI()
     }
     

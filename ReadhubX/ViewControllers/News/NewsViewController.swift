@@ -7,156 +7,105 @@
 //
 
 import UIKit
-import SafariServices
-import GTMRefresh
-import EmptyDataSet_Swift
-import PKHUD
+import JXSegmentedView
 
+/// 资讯合集 ViewController
 class NewsViewController: UIViewController {
-
-    var list: [NewsList.News] = []
-    var lastCursor: String = ""
+    /// 分页视图
+    var segmentedView: JXSegmentedView!
+    /// 分页视图的数据源配置
+    var segmentedDataSource: JXSegmentedTitleDataSource!
+    /// 滚动视图
+    var listContainerView: JXSegmentedListContainerView!
     
+    // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationItem.title = "资讯"
-
-        setupUI()
-        layoutPageSubviews()
-        tableView.triggerRefreshing()
+        
+        self.viewControllerConfig()
+        
+        setupSegmentedView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        segmentedView.frame = CGRect(x: 0, y: 0, width: view.width, height: 44)
+        listContainerView.frame = CGRect.init(x: 0, y: 0, width: view.width, height: view.height)
     }
     
     // MARK: - private method
-    private func loadData() {
-        let url = api_base + api_news + api_arg
+    private func setupSegmentedView() {
+        // 1、初始化 JXSegmentedView
+        segmentedView = JXSegmentedView()
         
-        NetworkService<NewsList>().requestJSON(url: url) { (jsonModel, message, success) in
-            self.tableView.endRefreshing(isSuccess: success)
-
-            if (success != false) {
-                DLog(msg: jsonModel)
-                self.lastCursor = (jsonModel?.data.last?.publishDate)!.timeStamp()
-                self.list = (jsonModel?.data)!
-            } else {
-                // 空白页展示
-                self.tableView.emptyDataSetSource = self
-                self.tableView.emptyDataSetDelegate = self
-                
-                HUD.flash(.label(message), delay: 2)
-            }
-            
-            self.tableView.reloadData()
-        }
-    }
-    
-    private func loadMoreData() {
-        let url = api_base + api_news + api_arg + lastCursor
+        // 2、配置数据源
+        // segmentedViewDataSource 一定要通过属性强持有！！！！！！！！！
+        segmentedDataSource = JXSegmentedTitleDataSource()
+        segmentedDataSource.isTitleColorGradientEnabled = true
+        segmentedView.dataSource = segmentedDataSource
+        segmentedDataSource.titleNormalFont = font_18
+        segmentedDataSource.titleNormalColor = color_000000
+        segmentedDataSource.titleSelectedColor = color_theme
         
-        NetworkService<NewsList>().requestJSON(url: url) { (jsonModel, message, success) in
-            self.tableView.endLoadMore(isNoMoreData: success)
-
-            if (success != false) {
-                DLog(msg: jsonModel)
-                self.lastCursor = (jsonModel?.data.last?.publishDate)!.timeStamp()
-                
-                let list: [NewsList.News] = (jsonModel?.data)!
-                self.list.append(contentsOf: list)
-                
-                self.tableView.reloadData()
-            } else {
-                HUD.flash(.label(message), delay: 2)
-            }
-        }
-    }
-    
-    private func setupUI() {
-        view.addSubview(tableView)
-    }
-    
-    private func layoutPageSubviews() {
-        tableView.snp.makeConstraints { (make) in
-            make.edges.equalTo(view)
-        }
-    }
-    
-    // MARK: - setter getter
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView.init(frame: .zero, style: .plain)
+        // 3、配置指示器
+        let indicator = JXSegmentedIndicatorLineView()
+        indicator.indicatorWidth = JXSegmentedViewAutomaticDimension
+        indicator.lineStyle = .lengthen
+        indicator.indicatorColor = color_theme
+        segmentedView.indicators = [indicator]
         
-        tableView.backgroundColor = .clear
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorInset = .zero
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.tableFooterView = UIView()
-        tableView.register(NewsCell.self, forCellReuseIdentifier: "cell")
+        // 4、配置 JXSegmentedView 的属性
+        segmentedView.isContentScrollViewClickTransitionAnimationEnabled = false
+        segmentedView.delegate = self
+        navigationItem.titleView = segmentedView
         
-        tableView.gtm_addRefreshHeaderView {
-            self.loadData()
-        }
-        tableView.gtm_addLoadMoreFooterView {
-            self.loadMoreData()
-        }
+        // 5、初始化 JXSegmentedListContainerView
+        listContainerView = JXSegmentedListContainerView(dataSource: self)
+        listContainerView.didAppearPercent = 0.9
+        view.addSubview(listContainerView)
         
-        return tableView
-    }()
-}
-
-extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
-    // MARK: - UITableViewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: NewsCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! NewsCell
-        let news = list[indexPath.row]
+        // 6、将 listContainerView.scrollView和segmentedView.contentScrollView 进行关联
+        segmentedView.contentScrollView = listContainerView.scrollView
         
-        cell.titleLabel.text = news.title
-        cell.contentLabel.text = news.summary
-
-        let date: Date = news.publishDate.date()!
-        let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970)
-        cell.infoLabel.text = news.siteName + " / " + news.authorName + " " + time
+        // 一定要统一 segmentedDataSource、segmentedView、listContainerView 的 defaultSelectedIndex
+        segmentedDataSource.titles = ["科技动态", "开发者资讯", "区块链快讯"]
+        // reloadData(selectedIndex:) 一定要调用
+        segmentedDataSource.reloadData(selectedIndex: 0)
         
-        return cell
-    }
-    
-    // MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let news = list[indexPath.row]
-        let vc = SFSafariViewController.init(url: URL.init(string: news.mobileUrl)!)
-        vc.preferredControlTintColor = color_theme
-
-        self.present(vc, animated: true, completion: nil)
+        segmentedView.defaultSelectedIndex = 0
+        segmentedView.reloadData()
+        
+        listContainerView.defaultSelectedIndex = 0
+        listContainerView.reloadData()
     }
 }
 
-extension NewsViewController: EmptyDataSetSource, EmptyDataSetDelegate {
-    // MARK: - EmptyDataSetSource
-    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let title: NSAttributedString = NSAttributedString.init(string: "请求失败", attributes: [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_17, NSAttributedString.Key.foregroundColor: color_000000])
+// MARK: - JXSegmentedViewDelegate
+extension NewsViewController: JXSegmentedViewDelegate {
+    func segmentedView(_ segmentedView: JXSegmentedView, didClickSelectedItemAt index: Int) {
+        // 传递 didClickSelectedItemAt 事件给 listContainerView，必须调用！！！
+        listContainerView.didClickSelectedItem(at: index)
+    }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, scrollingFrom leftIndex: Int, to rightIndex: Int, percent: CGFloat) {
+        // 传递 scrollingFrom 事件给 listContainerView，必须调用！！！
+        listContainerView.segmentedViewScrolling(from: leftIndex, to: rightIndex, percent: percent, selectedIndex: segmentedView.selectedIndex)
+    }
+}
+
+// MARK: - JXSegmentedListContainerViewDataSource
+extension NewsViewController: JXSegmentedListContainerViewDataSource {
+    func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
+        return segmentedDataSource.dataSource.count
+    }
+    
+    func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let vc = NewsListViewController()
         
-        return title
-    }
-    
-    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let title: NSAttributedString = NSAttributedString.init(string: "数据错误或者网络断开连接", attributes: [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_14, NSAttributedString.Key.foregroundColor: color_888888])
+        vc.viewController = self
+        vc.listIndex = index
         
-        return title
+        return vc
     }
-    
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
-        let title: NSAttributedString = NSAttributedString.init(string: "重新加载", attributes: [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_18, NSAttributedString.Key.foregroundColor: color_theme])
-        
-        return title
-    }
-    
-    // MARK: - EmptyDataSetDelegate
-    func emptyDataSet(_ scrollView: UIScrollView, didTapButton button: UIButton) {
-        tableView.triggerRefreshing()
-    }
-    
 }

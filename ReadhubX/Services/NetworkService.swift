@@ -1,6 +1,7 @@
 import Foundation
 import Alamofire
 
+/// 网络请求服务
 open class NetworkService<T: Codable> {
     
     typealias CompletionJSONClosure = (_ data: T?, _ message: String?, _ success: Bool) -> Void
@@ -24,7 +25,7 @@ open class NetworkService<T: Codable> {
         Alamofire.request(url).responseData { response in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             // 网络响应处理
-            if (response.error != nil) {
+            if response.error != nil {
                 self.completionJSONClosure(nil, response.error?.localizedDescription, false)
             } else {
                 if let data = response.data {
