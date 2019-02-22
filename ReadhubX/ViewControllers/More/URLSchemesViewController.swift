@@ -57,8 +57,10 @@ class URLSchemesViewController: UIViewController {
     /// 列表数据源
     private var dataSource: [URLSchemesItem] = {
         return [
-            URLSchemesItem(title: "打开热门话题", url: "readhubx://topic"),
-            URLSchemesItem(title: "打开资讯列表", url: "readhubx://news")
+            URLSchemesItem(title: "打开热门话题", url: "\(AppConfig.URLScheme)://\(AppConfig.URLSchemeTopic)"),
+            URLSchemesItem(title: "打开科技动态", url: "\(AppConfig.URLScheme)://\(AppConfig.URLSchemeNews)"),
+            URLSchemesItem(title: "打开开发者资讯", url: "\(AppConfig.URLScheme)://\(AppConfig.URLSchemeTechnews)"),
+            URLSchemesItem(title: "打开区块链快讯", url: "\(AppConfig.URLScheme)://\(AppConfig.URLSchemeBlockchain)")
         ]
     }()
 }

@@ -34,6 +34,8 @@ class StartViewController: UIViewController {
     // MARK: - event response
     @objc private func clickStartButton() {
         if callBack != nil {
+            dismiss(animated: false, completion: nil)
+            
             callBack!()
         }
     }

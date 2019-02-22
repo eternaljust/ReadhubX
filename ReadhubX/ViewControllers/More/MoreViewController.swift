@@ -54,6 +54,23 @@ class MoreViewController: UIViewController {
         
     }
     
+    private func grade() {
+        UIApplication.shared.open(URL(string: AppConfig.gradeURL)!, options: [:]) {  (success) in
+            
+        }
+    }
+    
+    private func share() {
+        let vc = UIActivityViewController(
+            activityItems: [
+                AppConfig.title,
+                #imageLiteral(resourceName: "app_logo"),
+                URL(string: AppConfig.url) as Any],
+            applicationActivities: [])
+        
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     private func gotoAbout() {
         self.navigationController?.pushViewController(AboutViewController(), animated: true)
     }
@@ -106,7 +123,7 @@ class MoreViewController: UIViewController {
                 MoreItem(title: "浏览历史", type: .history)
             ],
             [
-                MoreItem(title: "去评分", type: .grade),
+                MoreItem(title: "到 App Store 评分", type: .grade),
                 MoreItem(title: "推荐给朋友", type: .share),
                 MoreItem(title: "意见反馈", type: .feedback),
                 MoreItem(title: "关于 Readhub X", type: .about)
@@ -162,8 +179,14 @@ extension MoreViewController: UITableViewDelegate {
         switch item.type {
         case .history:
             gotoBrowseHistory()
+            
+        case .share:
+            share()
+        case .grade:
+            grade()
         case .feedback:
             sendEmail()
+            
         case .about:
             gotoAbout()
         default:

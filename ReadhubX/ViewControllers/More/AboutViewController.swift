@@ -144,6 +144,7 @@ extension AboutViewController: UITableViewDelegate {
             gotoPods()
         case .repository:
             gotoRepository()
+            
         case .about:
             gotoAbout()
         }

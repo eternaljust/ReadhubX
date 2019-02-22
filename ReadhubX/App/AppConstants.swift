@@ -182,6 +182,42 @@ let kNilValue = ""
 struct AppConfig {
     /// URL Schemes
     static var URLScheme: String = "readhubx"
+    /// URL Schemes: topic 热门话题
+    static var URLSchemeTopic: String = "topic"
+    /// URL Schemes: news 科技动态
+    static var URLSchemeNews: String = "news"
+    /// URL Schemes: technews 开发者资讯
+    static var URLSchemeTechnews: String = "technews"
+    /// URL Schemes: blockchain 区块链快讯
+    static var URLSchemeBlockchain: String = "blockchain"
+    
+    /// ShortcutItem: topic 热门话题
+    static var shortcutItemTopic: String = "topic"
+    /// ShortcutItem: news 科技动态
+    static var shortcutItemNews: String = "news"
+    /// ShortcutItem: technews 开发者资讯
+    static var shortcutItemTechnews: String = "technews"
+    /// ShortcutItem: blockchain 区块链快讯
+    static var shortcutItemBlockchain: String = "blockchain"
+    
+    /// 功能模块 module: 热门话题
+    static var moduleTopic: String = "热门话题"
+    /// 功能模块 module: news 科技动态
+    static var moduleNews: String = "科技动态"
+    /// 功能模块 module: technews 开发者资讯
+    static var moduleTechnews: String = "开发者资讯"
+    /// 功能模块 module: blockchain 区块链快讯
+    static var moduleBlockchain: String = "区块链快讯"
+    
+    /// App 的构建版本 build
+    static var build: String = "build"
+    /// App 的标题
+    static var title: String = "Readhub X - 每天花几分钟了解一下互联网行业里发生的事情。"
+    /// App Store 的链接
+    static var url: String = "https://itunes.apple.com/app/id1308118507"
+    /// App Store 的评分链接
+    static var gradeURL: String = "itms-apps://itunes.apple.com/app/id1308118507?mt=8&action=write-review"
+    
     /// 收件人邮箱
     static var receiverEmail: String = "eternal.just@gmail.com"
     /// 关于 Readhub 介绍

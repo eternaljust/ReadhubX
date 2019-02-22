@@ -69,7 +69,7 @@ class NewsViewController: UIViewController {
         segmentedView.contentScrollView = listContainerView.scrollView
         
         // 一定要统一 segmentedDataSource、segmentedView、listContainerView 的 defaultSelectedIndex
-        segmentedDataSource.titles = ["科技动态", "开发者资讯", "区块链快讯"]
+        segmentedDataSource.titles = [ AppConfig.moduleNews, AppConfig.moduleTechnews, AppConfig.moduleBlockchain ]
         // reloadData(selectedIndex:) 一定要调用
         segmentedDataSource.reloadData(selectedIndex: 0)
         
