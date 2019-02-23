@@ -11,6 +11,7 @@ import PKHUD
 
 /// tabBarViewController 
 class TabBarViewController: UITabBarController {
+    var lastDate: Date = Date()
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,8 @@ class TabBarViewController: UITabBarController {
         setupTabBar()
         setAppearance()
         globalConfig()
+        
+        self.delegate = self
     }
 
     // MARK: - private method
@@ -83,5 +86,36 @@ class TabBarViewController: UITabBarController {
         let nav = NavigationViewController.init(rootViewController: childController)
         
         addChild(nav)
+    }
+}
+
+// MARK: - UITabBarControllerDelegate
+extension TabBarViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool{
+        let vc = tabBarController.selectedViewController
+        let date = NSDate()
+        if vc == viewController {
+            if date.timeIntervalSince1970 - lastDate.timeIntervalSince1970 <= 0.5 {
+                switch tabBarController.selectedIndex {
+                case 0:
+                    NotificationCenter.default.post(Notification(name: .TabBarItemDidSelectedTopic))
+                case 1:
+                    NotificationCenter.default.post(Notification(name: .TabBarItemDidSelectedNews))
+                default:
+                    break
+                }
+                
+                // 如果双击，就将 lastDate 置成一个较小的值，防止多次重复点击造成的方法重复调用
+                lastDate = Date(timeIntervalSinceReferenceDate:1000) as Date
+            } else {
+                // 如果不是双击，记录最后一次点击时间
+                lastDate = date as Date
+            }
+            return false
+        } else {
+            // 如果换了按钮点击，记录下最后一次点击时间
+            lastDate = date as Date
+        }
+        return true
     }
 }

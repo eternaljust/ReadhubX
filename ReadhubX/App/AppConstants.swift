@@ -27,23 +27,23 @@ func DLog<T> (funcName: String = #function, line: Int = #line, file: String = #f
 }
 
 /// 字体大小
-var FONT: (CGFloat) -> UIFont = { size in
+let FONT: (CGFloat) -> UIFont = { size in
     return UIFont.systemFont(ofSize: size);
 }
 /// RGB 进制颜色 + 透明
-var RGBA: (CGFloat, CGFloat, CGFloat, CGFloat) -> UIColor = { red, green, blue, alpha in
+let RGBA: (CGFloat, CGFloat, CGFloat, CGFloat) -> UIColor = { red, green, blue, alpha in
     return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
 }
 /// RGB 进制颜色
-var RGB: (CGFloat, CGFloat, CGFloat) -> UIColor = { red, green, blue in
+let RGB: (CGFloat, CGFloat, CGFloat) -> UIColor = { red, green, blue in
     return RGBA(red, green, blue, 1)
 }
 /// 16 进制颜色 + 透明度
-var HEXA: (NSInteger, CGFloat) -> UIColor = { hex, alpha in
+let HEXA: (NSInteger, CGFloat) -> UIColor = { hex, alpha in
     return UIColor(red: ((CGFloat)((hex & 0xff0000) >> 16))/255.0, green: ((CGFloat)((hex & 0xff00) >> 8))/255.0, blue: ((CGFloat)(hex & 0xff))/255.0, alpha: alpha)
 }
 /// 16 进制颜色
-var HEX: (NSInteger) -> UIColor = { hex in
+let HEX: (NSInteger) -> UIColor = { hex in
     return HEXA(hex, 1)
 }
 
@@ -181,47 +181,72 @@ let kNilValue = ""
 /// App 相关的配置
 struct AppConfig {
     /// URL Schemes
-    static var URLScheme: String = "readhubx"
+    static let URLScheme: String = "readhubx"
     /// URL Schemes: topic 热门话题
-    static var URLSchemeTopic: String = "topic"
+    static let URLSchemeTopic: String = "topic"
     /// URL Schemes: news 科技动态
-    static var URLSchemeNews: String = "news"
+    static let URLSchemeNews: String = "news"
     /// URL Schemes: technews 开发者资讯
-    static var URLSchemeTechnews: String = "technews"
+    static let URLSchemeTechnews: String = "technews"
     /// URL Schemes: blockchain 区块链快讯
-    static var URLSchemeBlockchain: String = "blockchain"
+    static let URLSchemeBlockchain: String = "blockchain"
     
     /// ShortcutItem: topic 热门话题
-    static var shortcutItemTopic: String = "topic"
+    static let shortcutItemTopic: String = "topic"
     /// ShortcutItem: news 科技动态
-    static var shortcutItemNews: String = "news"
+    static let shortcutItemNews: String = "news"
     /// ShortcutItem: technews 开发者资讯
-    static var shortcutItemTechnews: String = "technews"
+    static let shortcutItemTechnews: String = "technews"
     /// ShortcutItem: blockchain 区块链快讯
-    static var shortcutItemBlockchain: String = "blockchain"
+    static let shortcutItemBlockchain: String = "blockchain"
     
     /// 功能模块 module: 热门话题
-    static var moduleTopic: String = "热门话题"
+    static let moduleTopic: String = "热门话题"
     /// 功能模块 module: news 科技动态
-    static var moduleNews: String = "科技动态"
+    static let moduleNews: String = "科技动态"
     /// 功能模块 module: technews 开发者资讯
-    static var moduleTechnews: String = "开发者资讯"
+    static let moduleTechnews: String = "开发者资讯"
     /// 功能模块 module: blockchain 区块链快讯
-    static var moduleBlockchain: String = "区块链快讯"
+    static let moduleBlockchain: String = "区块链快讯"
+    
+    /// 热门话题摘要 关闭状态
+    static let topicSummarySwitchOff: String = "topicSummarySwitchOff"
+    /// 科技动态英文新闻 关闭状态
+    static let englishSwitchOff: String = "englishSwitchOff"
+    
+    /// 资讯新闻语言（zh-cn：中文）
+    static let cnLanguage: String = "zh-cn"
+    /// 资讯新闻语言（en：英文）
+    static let enLanguage: String = "en"
+    /// 资讯的默认链接
+    static let defaultURL: String = "https://www.readhub.cn/"
     
     /// App 的构建版本 build
-    static var build: String = "build"
+    static let build: String = "build"
     /// App 的标题
-    static var title: String = "Readhub X - 每天花几分钟了解一下互联网行业里发生的事情。"
+    static let title: String = "Readhub X - 每天花几分钟了解一下互联网行业里发生的事情。"
     /// App Store 的链接
-    static var url: String = "https://itunes.apple.com/app/id1308118507"
+    static let url: String = "https://itunes.apple.com/app/id1308118507"
     /// App Store 的评分链接
-    static var gradeURL: String = "itms-apps://itunes.apple.com/app/id1308118507?mt=8&action=write-review"
+    static let gradeURL: String = "itms-apps://itunes.apple.com/app/id1308118507?mt=8&action=write-review"
     
     /// 收件人邮箱
-    static var receiverEmail: String = "eternal.just@gmail.com"
+    static let receiverEmail: String = "eternal.just@gmail.com"
     /// 关于 Readhub 介绍
-    static var readhubIntroURL: String = "https://mp.weixin.qq.com/s?__biz=MjM5ODIyMTE0MA==&mid=2650969398&idx=1&sn=70c44b9bb994d9a8d98453b97555890b"
+    static let readhubIntroURL: String = "https://mp.weixin.qq.com/s?__biz=MjM5ODIyMTE0MA==&mid=2650969398&idx=1&sn=70c44b9bb994d9a8d98453b97555890b"
     /// 项目源码
-    static var appRepository: String = "https://github.com/tzqiang/ReadhubX"
+    static let appRepository: String = "https://github.com/tzqiang/ReadhubX"
+}
+
+/// App 相关的通知
+extension Notification.Name {
+    /// 双击 热门话题 tabBarItem 滚动到列表顶部或者刷新
+    static let TabBarItemDidSelectedTopic = Notification.Name.init("com.eternaljust.TabBarItemDidSelectedTopic")
+    /// 双击 资讯列表 tabBarItem 滚动到列表顶部或者刷新
+    static let TabBarItemDidSelectedNews = Notification.Name.init("com.eternaljust.TabBarItemDidSelectedNews")
+    
+    /// 热门话题摘要 显示或隐藏
+    static let TopicSummaryShowOrHide = Notification.Name.init("com.eternaljust.TopicSummaryShowOrHide")
+    /// 科技动态英文新闻 显示或隐藏
+    static let EnglishNewsShowOrHide = Notification.Name.init("com.eternaljust.EnglishNewsShowOrHide")
 }

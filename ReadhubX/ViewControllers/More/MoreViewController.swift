@@ -75,6 +75,22 @@ class MoreViewController: UIViewController {
         self.navigationController?.pushViewController(AboutViewController(), animated: true)
     }
     
+    @objc private func onTopicSwitch() {
+        // 是否关闭
+        UserDefaults.standard.set(topicSwitch.isOn ? nil : "1", forKey: AppConfig.topicSummarySwitchOff)
+        
+        // 通知处理列表数据
+        NotificationCenter.default.post(Notification(name: .TopicSummaryShowOrHide))
+    }
+    
+    @objc private func onEnglishSwitch() {
+        // 是否关闭
+        UserDefaults.standard.set(englishSwitch.isOn ? nil : "1", forKey: AppConfig.englishSwitchOff)
+        
+        // 通知处理列表数据
+        NotificationCenter.default.post(Notification(name: .EnglishNewsShowOrHide))
+    }
+    
     // MARK: - private method
     private func setupUI() {
         view.addSubview(tableView)
@@ -103,7 +119,13 @@ class MoreViewController: UIViewController {
     /// 热门话题摘要开关
     private lazy var topicSwitch: UISwitch = {
         let switch1 = UISwitch.init()
+
+        // 是否关闭
+        let off = UserDefaults.standard.string(forKey: AppConfig.topicSummarySwitchOff)
         
+        switch1.setOn(off == nil ? true : false, animated: false)
+        switch1.addTarget(self, action: #selector(onTopicSwitch), for: .valueChanged)
+
         return switch1
     }()
     
@@ -111,6 +133,12 @@ class MoreViewController: UIViewController {
     private lazy var englishSwitch: UISwitch = {
         let switch1 = UISwitch.init()
         
+        // 是否关闭
+        let off = UserDefaults.standard.string(forKey: AppConfig.englishSwitchOff)
+        
+        switch1.setOn(off == nil ? true : false, animated: false)
+        switch1.addTarget(self, action: #selector(onEnglishSwitch), for: .valueChanged)
+
         return switch1
     }()
     

@@ -21,6 +21,8 @@ class NewsListViewController: UIViewController {
     
     /// 列表数据源
     private var list: [NewsList.News] = []
+    /// 过滤之后的列表数据源
+    private var filterList: [NewsList.News] = []
     /// 上一次访问的最后一条资讯的 PublishDate 对应的毫秒时间戳
     private var lastCursor: String = ""
     /// 当前的分页分类的数据 api
@@ -36,6 +38,39 @@ class NewsListViewController: UIViewController {
         layoutPageSubviews()
         getCurrentAPI()
         tableView.triggerRefreshing()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(scrollToTopOrRefresh), name: .TabBarItemDidSelectedNews, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newsListFilter), name: .EnglishNewsShowOrHide, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - event response
+    @objc private func scrollToTopOrRefresh() {
+        let contentOffsetY: CGFloat = tableView.contentOffset.y
+        
+        // 滚动到列表顶部或者刷新
+        if contentOffsetY > 0 {
+            tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        } else {
+            tableView.triggerRefreshing()
+        }
+    }
+    
+    @objc private func newsListFilter() {
+        // 是否过滤科技动态英文新闻
+        let off = UserDefaults.standard.string(forKey: AppConfig.englishSwitchOff)
+        
+        filterList = list.filter { (news) -> Bool in
+            if off != nil {
+                return news.language == AppConfig.cnLanguage
+            }
+            return true
+        }
+        
+        tableView.reloadData()
     }
     
     // MARK: - private method
@@ -70,7 +105,7 @@ class NewsListViewController: UIViewController {
                 HUD.flash(.label(message), delay: 2)
             }
             
-            self.tableView.reloadData()
+            self.newsListFilter()
         }
     }
     
@@ -87,7 +122,7 @@ class NewsListViewController: UIViewController {
                 let list: [NewsList.News] = (jsonModel?.data)!
                 self.list.append(contentsOf: list)
                 
-                self.tableView.reloadData()
+                self.newsListFilter()
             } else {
                 HUD.flash(.label(message), delay: 2)
             }
@@ -132,18 +167,18 @@ class NewsListViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension NewsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return filterList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: NewsCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! NewsCell
-        let news = list[indexPath.row]
+        let news = filterList[indexPath.row]
         
         cell.titleLabel.text = news.title
-        cell.contentLabel.text = news.summary
+        cell.summaryLabel.text = news.summary
         
         let date: Date = news.publishDate.date()!
-        let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970)
+        let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: false)
         cell.infoLabel.text = news.siteName + " / " + news.authorName + " " + time
         
         return cell
@@ -153,7 +188,7 @@ extension NewsListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension NewsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let news = list[indexPath.row]
+        let news = filterList[indexPath.row]
         let vc = BaseSafariViewController(url: URL(string: news.mobileUrl)!)
         
         viewController?.present(vc, animated: true, completion: nil)

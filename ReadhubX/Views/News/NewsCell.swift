@@ -26,7 +26,7 @@ class NewsCell: UITableViewCell {
     // MARK: - private method
     private func setupUI() {
         contentView.addSubview(titleLabel)
-        contentView.addSubview(contentLabel)
+        contentView.addSubview(summaryLabel)
         contentView.addSubview(infoLabel)
         
         layoutPageSubviews()
@@ -39,7 +39,7 @@ class NewsCell: UITableViewCell {
             make.right.equalToSuperview().offset(-width_list_space_15)
         }
         
-        contentLabel.snp.makeConstraints { (make) in
+        summaryLabel.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(width_list_space_15)
             make.left.right.equalTo(titleLabel)
             make.bottom.equalTo(infoLabel.snp.top).offset(-width_list_space_15)
@@ -48,7 +48,7 @@ class NewsCell: UITableViewCell {
         infoLabel.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().offset(-width_list_space_15)
             make.left.right.equalTo(titleLabel)
-            make.height.equalTo(14)
+            make.height.equalTo(15)
         }
     }
     
@@ -64,8 +64,8 @@ class NewsCell: UITableViewCell {
         return label
     }()
     
-    /// 资讯内容
-    lazy var contentLabel: UILabel = {
+    /// 资讯摘要
+    lazy var summaryLabel: UILabel = {
         let label = UILabel()
         
         label.font = font_14

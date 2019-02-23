@@ -14,7 +14,15 @@ extension String {
     func date() -> Date? {
         let dateformatter = DateFormatter()
         
-        dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'.000Z'"
+        if self.count > 19 {
+            let length19: String = String(self.prefix(19))
+            
+            dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            
+           return dateformatter.date(from: length19)
+        }
+        
+//        dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'.000Z'"
         
         return dateformatter.date(from: self)
     }
@@ -27,11 +35,13 @@ extension String {
     }
     
     /// 根据时间戳返回几分钟前，几小时前，几天前
-    public static func currennTime(timeStamp: Double) -> String {
+    public static func currennTime(timeStamp: TimeInterval, isTopic: Bool) -> String {
         // 获取当前的时间戳
         let currentTime = Date().timeIntervalSince1970
-        // readhub 发时间布的时差（8 小时）
-        let e: TimeInterval = (8 * 60 * 60)
+        // readhub 时差 话题（7 小时）资讯（8 小时）
+        let hour: Float = isTopic ? 7 : 8
+        
+        let e: TimeInterval = (TimeInterval(hour * 60 * 60))
         
         // 时间戳为毫秒级
         let timeSta: TimeInterval = timeStamp + e
@@ -51,16 +61,20 @@ extension String {
             return "\(hours)小时前"
         }
         let days = Int(reduceTime / 3600 / 24)
-        if days < 30 {
-            return "\(days)天前"
+        if days == 1 {
+            return "昨天"
         }
-        // 不满足上述条件---或者是未来日期-----直接返回日期
-        let date = NSDate(timeIntervalSince1970: timeSta)
-        let dfmatter = DateFormatter()
-        // yyyy-MM-dd HH:mm:ss
-        dfmatter.dateFormat="yyyy-MM-dd HH:mm:ss"
+        if days == 2 {
+            return "前天"
+        }
         
-        return dfmatter.string(from: date as Date)
+        // 不满足上述条件 直接返回日期
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        let dateFormat = DateFormatter()
+   
+        dateFormat.dateFormat = "MM月dd日"
+        
+        return dateFormat.string(from: date as Date)
     }
 }
 
