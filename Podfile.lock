@@ -5,6 +5,9 @@ PODS:
   - JXSegmentedView (0.0.4)
   - PKHUD (5.2.1)
   - SnapKit (4.2.0)
+  - SQLite.swift (0.11.5):
+    - SQLite.swift/standard (= 0.11.5)
+  - SQLite.swift/standard (0.11.5)
 
 DEPENDENCIES:
   - Alamofire
@@ -13,6 +16,7 @@ DEPENDENCIES:
   - JXSegmentedView
   - PKHUD
   - SnapKit
+  - SQLite.swift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -22,6 +26,7 @@ SPEC REPOS:
     - JXSegmentedView
     - PKHUD
     - SnapKit
+    - SQLite.swift
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
@@ -30,7 +35,8 @@ SPEC CHECKSUMS:
   JXSegmentedView: 2b036fc37f26fbd369f79b8953c610efe19bd529
   PKHUD: 4e6162c4c39ac367c6934e9855c6b4762ee16256
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
 
-PODFILE CHECKSUM: 998194c3966a63e689d4e458b24447654c9d645d
+PODFILE CHECKSUM: 44f7a52173f535bbd32c1447162255b6252e4bd5
 
 COCOAPODS: 1.6.0

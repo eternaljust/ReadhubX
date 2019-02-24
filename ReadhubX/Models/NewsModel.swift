@@ -14,6 +14,8 @@ struct NewsList : Codable {
     
     /// 资讯详细 model
     struct News: Codable {
+        /// 资讯 id
+        var id: Int = 0
         /// 资讯标题
         var title: String = ""
         /// 资讯摘要

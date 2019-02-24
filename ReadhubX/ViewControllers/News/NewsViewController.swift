@@ -30,15 +30,14 @@ class NewsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        segmentedView.frame = CGRect(x: 0, y: 0, width: view.width, height: 44)
-        listContainerView.frame = CGRect.init(x: 0, y: 0, width: view.width, height: view.height)
+        layoutPageSubviews()
     }
     
     // MARK: - private method
     private func setupSegmentedView() {
         // 1、初始化 JXSegmentedView
         segmentedView = JXSegmentedView()
-        
+
         // 2、配置数据源
         // segmentedViewDataSource 一定要通过属性强持有！！！！！！！！！
         segmentedDataSource = JXSegmentedTitleDataSource()
@@ -78,6 +77,14 @@ class NewsViewController: UIViewController {
         
         listContainerView.defaultSelectedIndex = 0
         listContainerView.reloadData()
+    }
+    
+    private func layoutPageSubviews() {
+        segmentedView.frame = CGRect(x: 0, y: 0, width: view.width, height: 44)
+    
+        // iPhone X 横屏状态下（第一次加载右滑列表滚动条有点问题）
+        let safeAreaSpace: CGFloat = (iPhoneX && (UIApplication.shared.statusBarOrientation == .landscapeLeft || UIApplication.shared.statusBarOrientation == .landscapeRight)) ? 44 : 0
+        listContainerView.frame = CGRect.init(x: safeAreaSpace, y: 0, width: view.width - 2 * safeAreaSpace, height: view.height)
     }
 }
 

@@ -136,6 +136,10 @@ extension TopicDetailViewController: UITableViewDataSource {
             cell.titleLabel.text = news?.title
             cell.infoLabel.text = news?.siteName
             
+            // 查找历史记录阅读
+            let history: Bool = SQLiteDBService.shared.searchHistory(id: (news?.id)!)
+            cell.titleLabel.textColor = history ? color_888888 : color_000000
+            
             return cell
         } else {
             let cell: TopicDetailNewsTopicCell = tableView.dequeueReusableCell(withIdentifier: "cell3") as! TopicDetailNewsTopicCell
@@ -146,6 +150,10 @@ extension TopicDetailViewController: UITableViewDataSource {
             let date: Date = topic!.createdAt.date()!
             let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: true)
             cell.infoLabel.text = time
+            
+            // 查找历史记录阅读
+            let history: Bool = SQLiteDBService.shared.searchHistory(id: (topic?.id)!)
+            cell.titleLabel.textColor = history ? color_888888 : color_000000
             
             return cell
         }
@@ -160,6 +168,10 @@ extension TopicDetailViewController: UITableViewDelegate {
             let vc = BaseSafariViewController(url: URL(string: (news?.mobileUrl)!)!)
             
             self.present(vc, animated: true, completion: nil)
+            
+            // 增加一条资讯历史记录
+            SQLiteDBService.shared.addHistory(id: (news?.id)!, type: 1, title: (news?.title)!, time: Date().timeIntervalSince1970, url: (news?.mobileUrl)!)
+            tableView.reloadRows(at: [indexPath], with: .none)
         } else if indexPath.section == 2 {
             let topic = topicDetail?.timeline?.topics[indexPath.row]
             let vc = TopicDetailViewController()
@@ -167,6 +179,10 @@ extension TopicDetailViewController: UITableViewDelegate {
             vc.topicID = (topic?.id)!
             
             self.navigationController?.pushViewController(vc, animated: true)
+            
+            // 增加一条话题历史记录
+            SQLiteDBService.shared.addHistory(id: (topic?.id)!, type: 0, title: (topic?.title)!, time: Date().timeIntervalSince1970, url: "")
+            tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
     

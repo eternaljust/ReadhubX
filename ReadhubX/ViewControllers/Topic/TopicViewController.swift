@@ -33,6 +33,7 @@ class TopicViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToTopOrRefresh), name: .TabBarItemDidSelectedTopic, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(summaryShowOrHide), name: .TopicSummaryShowOrHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteHistoryReload), name: .DeleteHistoryReload, object: nil)
     }
     
     deinit {
@@ -60,6 +61,11 @@ class TopicViewController: UIViewController {
         tableView.reloadData()
     }
     
+    @objc private func deleteHistoryReload() {
+        // 清空浏览历史记录刷新列表
+        tableView.reloadData()
+    }
+    
     // MARK: - private method
     private func loadData() {
         let url = api_base + api_topic + api_arg
@@ -69,7 +75,7 @@ class TopicViewController: UIViewController {
             
             if success {
                 DLog(msg: jsonModel)
-                self.lastCursor = NSNumber(value: (jsonModel?.data.last?.order)!).stringValue
+                self.lastCursor = "\(jsonModel?.data.last?.order ?? 0)"
                 self.list = (jsonModel?.data)!
             } else {
                 // 空白页展示
@@ -91,8 +97,8 @@ class TopicViewController: UIViewController {
             
             if success {
                 DLog(msg: jsonModel)
-                self.lastCursor = NSNumber(value: (jsonModel?.data.last?.order)!).stringValue
-                
+                self.lastCursor = "\(jsonModel?.data.last?.order ?? 0)"
+
                 let list: [TopicList.Topic] = (jsonModel?.data)!
                 self.list.append(contentsOf: list)
                 
@@ -155,6 +161,11 @@ extension TopicViewController: UITableViewDataSource {
         let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: true)
         cell.timeLabel.text = time
         
+        // 查找历史记录阅读
+        let history: Bool = SQLiteDBService.shared.searchHistory(id: topic.id)
+        cell.titleLabel.textColor = history ? color_888888 : color_000000
+        cell.summaryLabel.textColor = history ? color_888888 : color_353535
+        
         return cell
     }
 }
@@ -168,6 +179,10 @@ extension TopicViewController: UITableViewDelegate {
         vc.topicID = topic.id
         
         self.navigationController?.pushViewController(vc, animated: true)
+        
+        // 增加一条历史记录
+        SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "")
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 

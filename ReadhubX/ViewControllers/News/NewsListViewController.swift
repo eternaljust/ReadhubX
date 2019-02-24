@@ -41,6 +41,7 @@ class NewsListViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToTopOrRefresh), name: .TabBarItemDidSelectedNews, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newsListFilter), name: .EnglishNewsShowOrHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteHistoryReload), name: .DeleteHistoryReload, object: nil)
     }
     
     deinit {
@@ -70,6 +71,11 @@ class NewsListViewController: UIViewController {
             return true
         }
         
+        tableView.reloadData()
+    }
+    
+    @objc private func deleteHistoryReload() {
+        // 清空浏览历史记录刷新列表
         tableView.reloadData()
     }
     
@@ -181,6 +187,11 @@ extension NewsListViewController: UITableViewDataSource {
         let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: false)
         cell.infoLabel.text = news.siteName + " / " + news.authorName + " " + time
         
+        // 查找历史记录阅读
+        let history: Bool = SQLiteDBService.shared.searchHistory(id: "\(news.id)")
+        cell.titleLabel.textColor = history ? color_888888 : color_000000
+        cell.summaryLabel.textColor = history ? color_888888 : color_353535
+        
         return cell
     }
 }
@@ -192,6 +203,10 @@ extension NewsListViewController: UITableViewDelegate {
         let vc = BaseSafariViewController(url: URL(string: news.mobileUrl)!)
         
         viewController?.present(vc, animated: true, completion: nil)
+        
+        // 增加一条资讯历史记录
+            SQLiteDBService.shared.addHistory(id: "\(news.id)", type: 1, title: (news.title), time: Date().timeIntervalSince1970, url: (news.mobileUrl))
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 

@@ -25,6 +25,8 @@ struct TopicDetail: Codable {
     
     /// 媒体报道资讯
     struct TopicDetailNews: Codable {
+        /// 资讯 id
+        var id: String = ""
         /// 资讯标题
         var title: String = ""
         /// 资讯来源

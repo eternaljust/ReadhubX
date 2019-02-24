@@ -51,7 +51,7 @@ class MoreViewController: UIViewController {
     
     // MARK: - event response
     private func gotoBrowseHistory() {
-        
+        self.navigationController?.pushViewController(HistoryViewController(), animated: true)
     }
     
     private func grade() {

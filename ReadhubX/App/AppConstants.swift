@@ -64,7 +64,7 @@ let iPhone6: Bool = (SCREEN_HEIGHT == 667)
 /// 大屏幕
 let iPhonePlus: Bool = (SCREEN_HEIGHT > 667)
 /// iPhone X 屏幕
-let iPhoneX: Bool = (SCREEN_HEIGHT == 812 || SCREEN_HEIGHT == 896)
+let iPhoneX: Bool = (SCREEN_HEIGHT > SCREEN_WIDTH ? (SCREEN_HEIGHT == 812 || SCREEN_HEIGHT == 896) : (SCREEN_WIDTH == 812 || SCREEN_WIDTH == 896))
 /// iPad 屏幕
 let iPad: Bool = UIDevice.current.userInterfaceIdiom == .pad
 
@@ -221,6 +221,11 @@ struct AppConfig {
     /// 资讯的默认链接
     static let defaultURL: String = "https://www.readhub.cn/"
     
+    /// App 的沙盒 document
+    static let document: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    /// App 的本地数据库路径
+    static let databasePath: String = document.appending("/readhubx.db")
+
     /// App 的构建版本 build
     static let build: String = "build"
     /// App 的标题
@@ -249,4 +254,7 @@ extension Notification.Name {
     static let TopicSummaryShowOrHide = Notification.Name.init("com.eternaljust.TopicSummaryShowOrHide")
     /// 科技动态英文新闻 显示或隐藏
     static let EnglishNewsShowOrHide = Notification.Name.init("com.eternaljust.EnglishNewsShowOrHide")
+    
+    /// 清空浏览历史记录刷新
+    static let DeleteHistoryReload = Notification.Name.init("com.eternaljust.DeleteHistoryReload")
 }

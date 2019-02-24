@@ -14,7 +14,8 @@ target 'ReadhubX' do
   pod 'EmptyDataSet-Swift'
   pod 'PKHUD'
   pod 'JXSegmentedView'
-  
+  pod 'SQLite.swift'
+
   target 'ReadhubXTests' do
     inherit! :search_paths
     # Pods for testing

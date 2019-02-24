@@ -60,6 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - event response
     private func topic() {
         rootViewController?.selectedIndex = 0
+        
+        let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
+        // App 当前正在查看话题详情
+        navi.popToRootViewController(animated: false)
     }
     
     private func news(selectedIndex: Int) {

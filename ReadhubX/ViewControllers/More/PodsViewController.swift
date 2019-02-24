@@ -62,6 +62,7 @@ class PodsViewController: UIViewController {
             PodsItem(title: "GTMRefresh", url: "https://github.com/GTMYang/GTMRefresh"),
             PodsItem(title: "JXSegmentedView", url: "https://github.com/pujiaxin33/JXSegmentedView"),
             PodsItem(title: "PKHUD", url: "https://github.com/pkluz/PKHUD"),
+            PodsItem(title: "SQLite.swift", url: "https://github.com/stephencelis/SQLite.swift"),
             PodsItem(title: "SnapKit", url: "https://github.com/SnapKit/SnapKit")
         ]
     }()
