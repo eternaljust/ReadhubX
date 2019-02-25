@@ -47,9 +47,28 @@ class MoreViewController: UIViewController {
 
         setupUI()
         layoutPageSubviews()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(topicSwitchOn), name: .TopicSwitchOn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(enlishSwitchOn), name: .EnglishSwitchOn, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - event response
+    @objc private func topicSwitchOn() {
+        topicSwitch.setOn(true, animated: false)
+        
+        onTopicSwitch()
+    }
+    
+    @objc private func enlishSwitchOn() {
+        englishSwitch.setOn(true, animated: false)
+        
+        onEnglishSwitch()
+    }
+    
     private func gotoBrowseHistory() {
         self.navigationController?.pushViewController(HistoryViewController(), animated: true)
     }
@@ -227,15 +246,17 @@ extension MoreViewController: UITableViewDelegate {
 extension MoreViewController: MFMailComposeViewControllerDelegate {
     private func sendEmail() {
         guard MFMailComposeViewController.canSendMail() else {
-            let sendMailErrorAlert = UIAlertController(title: "无法发送邮件", message: "您的设备尚未设置邮箱，请在“邮件”应用中设置后再尝试发送。\n或直接通过邮箱向我反馈 email: \(AppConfig.receiverEmail)", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: "无法发送邮件", message: "您的设备尚未设置邮箱，请在“邮件”应用中设置后再尝试发送。\n或直接通过邮箱向我反馈 email: \(AppConfig.receiverEmail)", preferredStyle: .alert)
             
-            sendMailErrorAlert.addAction(UIAlertAction(title: "取消", style: .cancel) { _ in
+            alertVC.addAction(UIAlertAction(title: "取消", style: .cancel) { _ in
             })
-            sendMailErrorAlert.addAction(UIAlertAction(title: "复制邮箱", style: .destructive) { _ in
+            alertVC.addAction(UIAlertAction(title: "复制邮箱", style: .destructive) { _ in
                 UIPasteboard.general.string = AppConfig.receiverEmail
+                
+                HUD.flash(.label("已复制"), delay: AppConfig.HUDTextDelay)
             })
             
-            self.present(sendMailErrorAlert, animated: true, completion: nil)
+            self.present(alertVC, animated: true, completion: nil)
             
             return
         }
@@ -255,9 +276,9 @@ extension MoreViewController: MFMailComposeViewControllerDelegate {
         
         switch result {
         case .sent:
-            HUD.flash(.label("感谢您的反馈，我会尽量给您答复。"))
+            HUD.flash(.label("感谢您的反馈，我会尽量给您答复。"), delay: AppConfig.HUDTextDelay)
         case .failed:
-            HUD.flash(.label("邮件发送失败"))
+            HUD.flash(.label("邮件发送失败"), delay: AppConfig.HUDTextDelay)
         default:
             break
         }

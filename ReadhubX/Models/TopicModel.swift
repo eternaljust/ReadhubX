@@ -9,11 +9,11 @@
 import Foundation
 
 /// 热门话题列表 model
-struct TopicList : Codable {
-    let data: [Topic]
+struct TopicListModel : Codable {
+    let data: [TopicModel]
     
     /// 话题 model
-    struct Topic: Codable {
+    struct TopicModel: Codable {
         /// 话题标题
         var title: String = ""
         /// 话题摘要

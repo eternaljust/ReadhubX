@@ -241,6 +241,9 @@ struct AppConfig {
     static let readhubIntroURL: String = "https://mp.weixin.qq.com/s?__biz=MjM5ODIyMTE0MA==&mid=2650969398&idx=1&sn=70c44b9bb994d9a8d98453b97555890b"
     /// 项目源码
     static let appRepository: String = "https://github.com/tzqiang/ReadhubX"
+    
+    /// App HUD 文字显示时间延迟 delay 1.5s
+    static let HUDTextDelay: TimeInterval = 1.5
 }
 
 /// App 相关的通知
@@ -254,6 +257,11 @@ extension Notification.Name {
     static let TopicSummaryShowOrHide = Notification.Name.init("com.eternaljust.TopicSummaryShowOrHide")
     /// 科技动态英文新闻 显示或隐藏
     static let EnglishNewsShowOrHide = Notification.Name.init("com.eternaljust.EnglishNewsShowOrHide")
+    
+    /// 热门话题摘要 Switch 打开
+    static let TopicSwitchOn = Notification.Name.init("com.eternaljust.TopicSwitchOn")
+    /// 科技动态英文新闻 Switch 打开
+    static let EnglishSwitchOn = Notification.Name.init("com.eternaljust.EnglishSwitchOn")
     
     /// 清空浏览历史记录刷新
     static let DeleteHistoryReload = Notification.Name.init("com.eternaljust.DeleteHistoryReload")

@@ -9,7 +9,7 @@
 import Foundation
 
 /// 浏览历史记录 model
-struct History: Codable {
+struct HistoryModel: Codable {
     /// 话题 id
     var id: String = ""
     /// 历史记录类型：0话题 1资讯
@@ -20,4 +20,8 @@ struct History: Codable {
     var time: TimeInterval = Date().timeIntervalSince1970
     /// 资讯链接
     var url: String = AppConfig.defaultURL
+    /// 资讯新闻语言（zh-cn：中文 en：英文）
+    var language: String = AppConfig.cnLanguage
+    /// extra 预留额外的扩展字段：json 字符串
+    var extra: String = ""
 }

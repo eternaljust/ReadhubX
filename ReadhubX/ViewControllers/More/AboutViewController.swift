@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import PKHUD
 
 /// 关于 ViewController
 class AboutViewController: UIViewController {
     enum AboutItemType: Int {
         /// URL Schemes
         case urlSchemes
+        /// 清理缓存
+        case reset
+        /// 更新版本
+        case update
+        
         /// 开源库
         case pods
         /// 项目源码
@@ -44,6 +50,33 @@ class AboutViewController: UIViewController {
     // MARK: - event response
     private func gotoURLSchemes() {
         self.navigationController?.pushViewController(URLSchemesViewController(), animated: true)
+    }
+    
+    private func reset() {
+        let alertVC = UIAlertController(title: "清理缓存？", message: "同时会恢复默认设置以及清空浏览历史", preferredStyle: .alert)
+        
+        alertVC.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
+            
+        }))
+        alertVC.addAction(UIAlertAction(title: "确认", style: .destructive, handler: { _ in
+            // 通知 Switch 恢复默认打开
+            NotificationCenter.default.post(Notification(name: .TopicSwitchOn))
+            NotificationCenter.default.post(Notification(name: .EnglishSwitchOn))
+            
+            // 清空浏览历史
+            SQLiteDBService.shared.deleteHistory()
+            NotificationCenter.default.post(Notification(name: .DeleteHistoryReload))
+            
+            HUD.flash(.label("清理缓存成功！"), delay: AppConfig.HUDTextDelay)
+        }))
+        
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    private func update() {
+        UIApplication.shared.open(URL(string: AppConfig.url)!, options: [:]) {  (success) in
+            
+        }
     }
     
     private func gotoPods() {
@@ -101,6 +134,10 @@ class AboutViewController: UIViewController {
         return [
             [
                 AboutItem(title: "URL Schemes", type: .urlSchemes),
+                AboutItem(title: "清理缓存", type: .reset),
+                AboutItem(title: "更新版本", type: .update)
+            ],
+            [
                 AboutItem(title: "开源库", type: .pods),
                 AboutItem(title: "项目源码", type: .repository)
             ],
@@ -140,6 +177,11 @@ extension AboutViewController: UITableViewDelegate {
         switch item.type {
         case .urlSchemes:
             gotoURLSchemes()
+        case .reset:
+            reset()
+        case .update:
+            update()
+            
         case .pods:
             gotoPods()
         case .repository:

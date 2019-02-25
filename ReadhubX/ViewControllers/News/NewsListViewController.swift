@@ -20,9 +20,9 @@ class NewsListViewController: UIViewController {
     var listIndex: Int = 0
     
     /// 列表数据源
-    private var list: [NewsList.News] = []
+    private var list: [NewsListModel.NewsModel] = []
     /// 过滤之后的列表数据源
-    private var filterList: [NewsList.News] = []
+    private var filterList: [NewsListModel.NewsModel] = []
     /// 上一次访问的最后一条资讯的 PublishDate 对应的毫秒时间戳
     private var lastCursor: String = ""
     /// 当前的分页分类的数据 api
@@ -96,7 +96,7 @@ class NewsListViewController: UIViewController {
     private func loadData() {
         let url = api_base + currentAPI + api_arg
         
-        NetworkService<NewsList>().requestJSON(url: url) { (jsonModel, message, success) in
+        NetworkService<NewsListModel>().requestJSON(url: url) { (jsonModel, message, success) in
             self.tableView.endRefreshing(isSuccess: success)
             
             if success {
@@ -108,7 +108,7 @@ class NewsListViewController: UIViewController {
                 self.tableView.emptyDataSetSource = self
                 self.tableView.emptyDataSetDelegate = self
                 
-                HUD.flash(.label(message), delay: 2)
+                HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
             }
             
             self.newsListFilter()
@@ -118,14 +118,14 @@ class NewsListViewController: UIViewController {
     private func loadMoreData() {
         let url = api_base + currentAPI + api_arg + lastCursor
         
-        NetworkService<NewsList>().requestJSON(url: url) { (jsonModel, message, success) in
+        NetworkService<NewsListModel>().requestJSON(url: url) { (jsonModel, message, success) in
             self.tableView.endLoadMore(isNoMoreData: false)
             
             if success {
                 DLog(msg: jsonModel)
                 self.lastCursor = (jsonModel?.data.last?.publishDate)!.timeStamp()
                 
-                let list: [NewsList.News] = (jsonModel?.data)!
+                let list: [NewsListModel.NewsModel] = (jsonModel?.data)!
                 self.list.append(contentsOf: list)
                 
                 self.newsListFilter()
@@ -205,7 +205,7 @@ extension NewsListViewController: UITableViewDelegate {
         viewController?.present(vc, animated: true, completion: nil)
         
         // 增加一条资讯历史记录
-            SQLiteDBService.shared.addHistory(id: "\(news.id)", type: 1, title: (news.title), time: Date().timeIntervalSince1970, url: (news.mobileUrl))
+        SQLiteDBService.shared.addHistory(id: "\(news.id)", type: 1, title: (news.title), time: Date().timeIntervalSince1970, url: (news.mobileUrl), language: news.language, extra: "")
         tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

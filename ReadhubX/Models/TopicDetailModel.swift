@@ -9,7 +9,7 @@
 import Foundation
 
 /// 话题详情 model
-struct TopicDetail: Codable {
+struct TopicDetailModel: Codable {
     /// 话题标题
     var title: String = ""
     /// 话题摘要
@@ -18,13 +18,13 @@ struct TopicDetail: Codable {
     var createdAt: String = ""
     
     /// 媒体报道
-    var newsArray: [TopicDetailNews]
+    var newsArray: [TopicDetailNewsModel]
     
     /// 事件追踪
-    var timeline: TopicDetailTimeline?
+    var timeline: TopicDetailTimelineModel?
     
     /// 媒体报道资讯
-    struct TopicDetailNews: Codable {
+    struct TopicDetailNewsModel: Codable {
         /// 资讯 id
         var id: String = ""
         /// 资讯标题
@@ -33,16 +33,18 @@ struct TopicDetail: Codable {
         var siteName: String = ""
         /// 资讯手机端链接
         var mobileUrl: String = AppConfig.defaultURL
+        /// 资讯新闻语言（zh-cn：中文 en：英文）
+        var language: String = AppConfig.cnLanguage
     }
     
     /// 相关事件
-    struct TopicDetailTimeline: Codable {
+    struct TopicDetailTimelineModel: Codable {
         /// 话题列表
-        var topics: [TopicDetailTimelineTopic]
+        var topics: [TopicDetailTimelineTopicModel]
     }
     
     /// 相关事件的话题
-    struct TopicDetailTimelineTopic: Codable {
+    struct TopicDetailTimelineTopicModel: Codable {
         /// 话题标题
         var title: String = ""
         /// 话题创建时间

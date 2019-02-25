@@ -8,11 +8,12 @@
 
 import UIKit
 import EmptyDataSet_Swift
+import PKHUD
 
 /// 浏览历史记录 ViewController
 class HistoryViewController: UIViewController {
     /// 列表数据源
-    var list: [History] = [History]()
+    var list: [HistoryModel] = []
     
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -34,7 +35,7 @@ class HistoryViewController: UIViewController {
     
     // MARK: - event response
     @objc private func deleteHistory() {
-        let alertVC = UIAlertController(title: "清空历史记录？", message: nil, preferredStyle: .alert)
+        let alertVC = UIAlertController(title: "清空浏览历史？", message: nil, preferredStyle: .alert)
         
         alertVC.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
             
@@ -43,6 +44,8 @@ class HistoryViewController: UIViewController {
             SQLiteDBService.shared.deleteHistory()
             NotificationCenter.default.post(Notification(name: .DeleteHistoryReload))
             
+            HUD.flash(.label("已清空！"), delay: AppConfig.HUDTextDelay)
+
             self.loadData()
         }))
         
@@ -51,7 +54,16 @@ class HistoryViewController: UIViewController {
     
     // MARK: - private method
     private func loadData() {
-        list = SQLiteDBService.shared.searchAllHistory()
+        let histories = SQLiteDBService.shared.searchAllHistory()
+        // 是否过滤科技动态英文新闻
+        let off = UserDefaults.standard.string(forKey: AppConfig.englishSwitchOff)
+        
+        list = histories.filter({ (history) -> Bool in
+            if off != nil {
+                return history.language == AppConfig.cnLanguage
+            }
+            return true
+        })
         
         if list.count == 0 {
             tableView.emptyDataSetSource = self

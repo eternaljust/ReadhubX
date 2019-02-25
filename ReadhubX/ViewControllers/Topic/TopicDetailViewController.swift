@@ -11,9 +11,12 @@ import PKHUD
 
 /// 话题详情 ViewController
 class TopicDetailViewController: UIViewController {
+    /// 当前的话题 id
     var topicID: String = ""
     /// 话题详情
-    private var topicDetail: TopicDetail?
+    private var topicDetail: TopicDetailModel?
+    /// 新闻列表数据源
+    private var newsArray: [TopicDetailModel.TopicDetailNewsModel] = []
     
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -25,25 +28,52 @@ class TopicDetailViewController: UIViewController {
         setupUI()
         layoutPageSubviews()
         loadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(newsListFilter), name: .EnglishNewsShowOrHide, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - event response
+    @objc private func newsListFilter() {
+        // 是否过滤科技动态英文新闻
+        let off = UserDefaults.standard.string(forKey: AppConfig.englishSwitchOff)
+        
+        let filterNewsArray = newsArray.filter { (news) -> Bool in
+            if off != nil {
+                return news.language == AppConfig.cnLanguage
+            }
+            return true
+        }
+        topicDetail?.newsArray = filterNewsArray
+        
+        // 过滤掉相关话题列表中包含当前的话题
+        let fileterTopics = topicDetail?.timeline?.topics.filter({ (topic) -> Bool in
+            return topic.id != self.topicID
+        })
+        topicDetail?.timeline?.topics = fileterTopics ?? []
+        
+        tableView.reloadData()
+    }
     
     // MARK: - private method
     private func loadData() {
         let url = api_base + api_topic_detail + topicID
         
-        HUD.show(.systemActivity)
-        NetworkService<TopicDetail>().requestJSON(url: url) { (jsonModel, message, success) in
+        HUD.show(.systemActivity, onView: view)
+        NetworkService<TopicDetailModel>().requestJSON(url: url) { (jsonModel, message, success) in
             HUD.hide()
 
             if success {
                 DLog(msg: jsonModel)
                 self.topicDetail = jsonModel
+                self.newsArray = jsonModel?.newsArray ?? []
                 
-                self.tableView.reloadData()
+                self.newsListFilter()
             } else {
-                HUD.flash(.label(message), delay: 2)
+                HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
             }
         }
     }
@@ -170,7 +200,7 @@ extension TopicDetailViewController: UITableViewDelegate {
             self.present(vc, animated: true, completion: nil)
             
             // 增加一条资讯历史记录
-            SQLiteDBService.shared.addHistory(id: (news?.id)!, type: 1, title: (news?.title)!, time: Date().timeIntervalSince1970, url: (news?.mobileUrl)!)
+            SQLiteDBService.shared.addHistory(id: (news?.id)!, type: 1, title: (news?.title)!, time: Date().timeIntervalSince1970, url: (news?.mobileUrl)!, language:(news?.language)!, extra: "")
             tableView.reloadRows(at: [indexPath], with: .none)
         } else if indexPath.section == 2 {
             let topic = topicDetail?.timeline?.topics[indexPath.row]
@@ -181,7 +211,7 @@ extension TopicDetailViewController: UITableViewDelegate {
             self.navigationController?.pushViewController(vc, animated: true)
             
             // 增加一条话题历史记录
-            SQLiteDBService.shared.addHistory(id: (topic?.id)!, type: 0, title: (topic?.title)!, time: Date().timeIntervalSince1970, url: "")
+            SQLiteDBService.shared.addHistory(id: (topic?.id)!, type: 0, title: (topic?.title)!, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, extra: "")
             tableView.reloadRows(at: [indexPath], with: .none)
         }
     }

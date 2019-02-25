@@ -9,11 +9,11 @@
 import Foundation
 
 /// 新闻资讯动态列表 model
-struct NewsList : Codable {
-    let data: [News]
+struct NewsListModel : Codable {
+    let data: [NewsModel]
     
     /// 资讯详细 model
-    struct News: Codable {
+    struct NewsModel: Codable {
         /// 资讯 id
         var id: Int = 0
         /// 资讯标题

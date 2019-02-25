@@ -14,7 +14,7 @@ import PKHUD
 /// 热门话题列表 ViewController
 class TopicViewController: UIViewController {
     /// 列表数据源
-    private var list: [TopicList.Topic] = []
+    private var list: [TopicListModel.TopicModel] = []
     /// 上一页数据最后一个话题的order，首次传空
     private var lastCursor: String = ""
     // 是否显示热门话题摘要
@@ -70,7 +70,7 @@ class TopicViewController: UIViewController {
     private func loadData() {
         let url = api_base + api_topic + api_arg
         
-        NetworkService<TopicList>().requestJSON(url: url) { (jsonModel, message, success) in
+        NetworkService<TopicListModel>().requestJSON(url: url) { (jsonModel, message, success) in
             self.tableView.endRefreshing(isSuccess: success)
             
             if success {
@@ -82,7 +82,7 @@ class TopicViewController: UIViewController {
                 self.tableView.emptyDataSetSource = self
                 self.tableView.emptyDataSetDelegate = self
                 
-                HUD.flash(.label(message), delay: 2)
+                HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
             }
             
             self.tableView.reloadData()
@@ -92,14 +92,14 @@ class TopicViewController: UIViewController {
     private func loadMoreData() {
         let url = api_base + api_topic + api_arg + lastCursor
         
-        NetworkService<TopicList>().requestJSON(url: url) { (jsonModel, message, success) in
+        NetworkService<TopicListModel>().requestJSON(url: url) { (jsonModel, message, success) in
             self.tableView.endLoadMore(isNoMoreData: false)
             
             if success {
                 DLog(msg: jsonModel)
                 self.lastCursor = "\(jsonModel?.data.last?.order ?? 0)"
 
-                let list: [TopicList.Topic] = (jsonModel?.data)!
+                let list: [TopicListModel.TopicModel] = (jsonModel?.data)!
                 self.list.append(contentsOf: list)
                 
                 self.tableView.reloadData()
@@ -180,8 +180,8 @@ extension TopicViewController: UITableViewDelegate {
         
         self.navigationController?.pushViewController(vc, animated: true)
         
-        // 增加一条历史记录
-        SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "")
+        // 增加一条话题历史记录
+        SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, extra: "")
         tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
@@ -201,7 +201,7 @@ extension TopicViewController: EmptyDataSetSource {
     }
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
-        let title: NSAttributedString = NSAttributedString.init(string: "重新加载", attributes: [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_18, NSAttributedString.Key.foregroundColor: color_theme])
+        let title: NSAttributedString = NSAttributedString.init(string: "重新加载话题", attributes: [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_18, NSAttributedString.Key.foregroundColor: color_theme])
         
         return title
     }
