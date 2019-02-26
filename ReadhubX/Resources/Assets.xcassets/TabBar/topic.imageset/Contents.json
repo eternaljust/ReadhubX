@@ -6,20 +6,17 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "home@2x.png",
+      "filename" : "topic@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "home@3x.png",
+      "filename" : "topic@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
-  },
-  "properties" : {
-    "template-rendering-intent" : "original"
   }
 }

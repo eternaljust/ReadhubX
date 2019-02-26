@@ -20,8 +20,8 @@ class HistoryViewController: UIViewController {
         super.viewDidLoad()
         
         self.viewControllerConfig()
-        self.navigationItem.title = "浏览历史"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "删除", style: .plain, target: self, action: #selector(deleteHistory))
+        navigationItem.title = "浏览历史"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "delete"), style: .plain, target: self, action: #selector(deleteHistory))
         
         setupUI()
         layoutPageSubviews()

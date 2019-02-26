@@ -200,13 +200,14 @@ extension NewsListViewController: UITableViewDataSource {
 extension NewsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let news = filterList[indexPath.row]
-        let vc = BaseSafariViewController(url: URL(string: news.mobileUrl)!)
-        
-        viewController?.present(vc, animated: true, completion: nil)
         
         // 增加一条资讯历史记录
         SQLiteDBService.shared.addHistory(id: "\(news.id)", type: 1, title: (news.title), time: Date().timeIntervalSince1970, url: (news.mobileUrl), language: news.language, extra: "")
         tableView.reloadRows(at: [indexPath], with: .none)
+        
+        let vc = BaseSafariViewController(url: URL(string: news.mobileUrl)!)
+        
+        viewController?.present(vc, animated: true, completion: nil)
     }
 }
 

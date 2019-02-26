@@ -16,6 +16,8 @@ struct TopicDetailModel: Codable {
     var summary: String = ""
     /// 话题创建时间
     var createdAt: String = ""
+    /// 即时查看
+    var hasInstantView: Bool = false
     
     /// 媒体报道
     var newsArray: [TopicDetailNewsModel]
@@ -52,4 +54,16 @@ struct TopicDetailModel: Codable {
         /// 话题 id
         var id: String = ""
     }
+}
+
+/// 话题的即时查看
+struct TopicInstantviewModel: Codable {
+    /// 即时查看网页的标题
+    var title: String = ""
+    /// 即时查看网页的访问源网址
+    var url: String = ""
+    /// 即时查看网页的来源
+    var siteName: String = ""
+    /// 即时查看网页的 html 内容
+    var content: String = ""
 }

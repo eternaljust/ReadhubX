@@ -10,7 +10,7 @@ import UIKit
 
 /// 关于 headerView
 class AboutHeaderView: UIView {
-    /// MARK: - instance
+    // MARK: - instance
     override init(frame: CGRect) {
         super.init(frame: frame)
         

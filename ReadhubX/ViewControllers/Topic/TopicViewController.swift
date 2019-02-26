@@ -85,7 +85,7 @@ class TopicViewController: UIViewController {
                 HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
             }
             
-            self.tableView.reloadData()
+            self.summaryShowOrHide()
         }
     }
     
@@ -102,7 +102,7 @@ class TopicViewController: UIViewController {
                 let list: [TopicListModel.TopicModel] = (jsonModel?.data)!
                 self.list.append(contentsOf: list)
                 
-                self.tableView.reloadData()
+                self.summaryShowOrHide()
             } else {
                 HUD.flash(.label(message), delay: 2)
             }
@@ -173,16 +173,17 @@ extension TopicViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension TopicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = TopicDetailViewController()
         let topic = list[indexPath.row]
-        
-        vc.topicID = topic.id
-        
-        self.navigationController?.pushViewController(vc, animated: true)
         
         // 增加一条话题历史记录
         SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, extra: "")
         tableView.reloadRows(at: [indexPath], with: .none)
+        
+        let vc = TopicDetailViewController()
+
+        vc.topicID = topic.id
+
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

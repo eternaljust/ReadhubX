@@ -46,10 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 3D Touch ShortcutItem
         let shortcutItems: [UIApplicationShortcutItem] = [
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemTopic, localizedTitle: AppConfig.moduleTopic, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .home), userInfo: nil),
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemNews, localizedTitle: AppConfig.moduleNews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .bookmark), userInfo: nil),
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemTechnews, localizedTitle: AppConfig.moduleTechnews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .bookmark), userInfo: nil),
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemBlockchain, localizedTitle: AppConfig.moduleBlockchain, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(type: .bookmark), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemTopic, localizedTitle: AppConfig.moduleTopic, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "topic"), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemNews, localizedTitle: AppConfig.moduleNews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "news"), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemTechnews, localizedTitle: AppConfig.moduleTechnews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "news"), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemBlockchain, localizedTitle: AppConfig.moduleBlockchain, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "news"), userInfo: nil),
         ]
         
         UIApplication.shared.shortcutItems = shortcutItems
@@ -59,8 +59,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - event response
     private func topic() {
-        rootViewController?.selectedIndex = 0
+        // 如果当前正在资讯网页浏览 safariVC
+        if rootViewController?.selectedIndex == 1 {
+            let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
+
+            navi.topViewController?.dismiss(animated: false, completion: nil)
+        }
         
+        rootViewController?.selectedIndex = 0
+
         let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
         // App 当前正在查看话题详情
         navi.popToRootViewController(animated: false)

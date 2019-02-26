@@ -17,6 +17,8 @@ class TopicDetailViewController: UIViewController {
     private var topicDetail: TopicDetailModel?
     /// 新闻列表数据源
     private var newsArray: [TopicDetailModel.TopicDetailNewsModel] = []
+    /// 即时查看
+    private var instantview: TopicInstantviewModel?
     
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -58,6 +60,14 @@ class TopicDetailViewController: UIViewController {
         tableView.reloadData()
     }
     
+    @objc private func gotoInstantview(){
+        let vc = TopicInstantviewViewController()
+        
+        vc.instantview = instantview
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     // MARK: - private method
     private func loadData() {
         let url = api_base + api_topic_detail + topicID
@@ -72,6 +82,29 @@ class TopicDetailViewController: UIViewController {
                 self.newsArray = jsonModel?.newsArray ?? []
                 
                 self.newsListFilter()
+                
+                // 即时查看
+                if (jsonModel?.hasInstantView)! {
+                    self.loadInstantview()
+                }
+            } else {
+                HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
+            }
+        }
+    }
+    
+    private func loadInstantview() {
+        let url = api_base + api_topic_instantview + topicID
+        
+        HUD.show(.systemActivity, onView: view)
+        NetworkService<TopicInstantviewModel>().requestJSON(url: url) { (jsonModel, message, success) in
+            HUD.hide()
+            
+            if success {
+                DLog(msg: jsonModel)
+                self.instantview = jsonModel
+                
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "instantview"), style: .plain, target: self, action: #selector(self.gotoInstantview))
             } else {
                 HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
             }
@@ -195,24 +228,26 @@ extension TopicDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             let news = topicDetail?.newsArray[indexPath.row]
-            let vc = BaseSafariViewController(url: URL(string: (news?.mobileUrl)!)!)
-            
-            self.present(vc, animated: true, completion: nil)
-            
+
             // 增加一条资讯历史记录
             SQLiteDBService.shared.addHistory(id: (news?.id)!, type: 1, title: (news?.title)!, time: Date().timeIntervalSince1970, url: (news?.mobileUrl)!, language:(news?.language)!, extra: "")
             tableView.reloadRows(at: [indexPath], with: .none)
+            
+            let vc = BaseSafariViewController(url: URL(string: (news?.mobileUrl)!)!)
+            
+            self.present(vc, animated: true, completion: nil)
         } else if indexPath.section == 2 {
             let topic = topicDetail?.timeline?.topics[indexPath.row]
+            
+            // 增加一条话题历史记录
+            SQLiteDBService.shared.addHistory(id: (topic?.id)!, type: 0, title: (topic?.title)!, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, extra: "")
+            tableView.reloadRows(at: [indexPath], with: .none)
+            
             let vc = TopicDetailViewController()
             
             vc.topicID = (topic?.id)!
             
             self.navigationController?.pushViewController(vc, animated: true)
-            
-            // 增加一条话题历史记录
-            SQLiteDBService.shared.addHistory(id: (topic?.id)!, type: 0, title: (topic?.title)!, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, extra: "")
-            tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
     

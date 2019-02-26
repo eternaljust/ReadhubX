@@ -15,6 +15,8 @@
 		8105F8F0221EC838001E3867 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8EF221EC838001E3867 /* NavigationViewController.swift */; };
 		8105F8F2221ECFFA001E3867 /* URLSchemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */; };
 		8105F8F4221ED01A001E3867 /* PodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8F3221ED01A001E3867 /* PodsViewController.swift */; };
+		8123B745222520CC00503FAE /* TopicInstantviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8123B744222520CC00503FAE /* TopicInstantviewViewController.swift */; };
+		8123B7472225274500503FAE /* TopicInstantviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8123B7462225274500503FAE /* TopicInstantviewHeaderView.swift */; };
 		813AAB38222262BF00A2F680 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813AAB37222262BF00A2F680 /* HistoryModel.swift */; };
 		813AAB3A2222666600A2F680 /* SQLiteDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813AAB392222666600A2F680 /* SQLiteDBService.swift */; };
 		813AAB3C22229B8C00A2F680 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813AAB3B22229B8C00A2F680 /* HistoryViewController.swift */; };
@@ -81,6 +83,8 @@
 		8105F8EF221EC838001E3867 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemesViewController.swift; sourceTree = "<group>"; };
 		8105F8F3221ED01A001E3867 /* PodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodsViewController.swift; sourceTree = "<group>"; };
+		8123B744222520CC00503FAE /* TopicInstantviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicInstantviewViewController.swift; sourceTree = "<group>"; };
+		8123B7462225274500503FAE /* TopicInstantviewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicInstantviewHeaderView.swift; sourceTree = "<group>"; };
 		813AAB37222262BF00A2F680 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		813AAB392222666600A2F680 /* SQLiteDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDBService.swift; sourceTree = "<group>"; };
 		813AAB3B22229B8C00A2F680 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 			children = (
 				81F3BF06221ABE900069DD7F /* TopicViewController.swift */,
 				8153BCC1222146BF009F8EF6 /* TopicDetailViewController.swift */,
+				8123B744222520CC00503FAE /* TopicInstantviewViewController.swift */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 			children = (
 				81F3BF0C221ABEC00069DD7F /* TopicCell.swift */,
 				8153BCBB222141BB009F8EF6 /* TopicDetailCell.swift */,
+				8123B7462225274500503FAE /* TopicInstantviewHeaderView.swift */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -630,9 +636,11 @@
 				8153BCBA222121AE009F8EF6 /* TopicModel.swift in Sources */,
 				81F3BEEF221A85190069DD7F /* UIView+Extension.swift in Sources */,
 				81F3BEF1221A86FB0069DD7F /* UIImage+Extension.swift in Sources */,
+				8123B7472225274500503FAE /* TopicInstantviewHeaderView.swift in Sources */,
 				81F3BF0F221ABEDF0069DD7F /* NewsCell.swift in Sources */,
 				81F3BF09221ABE9A0069DD7F /* NewsViewController.swift in Sources */,
 				81F3BF0D221ABEC00069DD7F /* TopicCell.swift in Sources */,
+				8123B745222520CC00503FAE /* TopicInstantviewViewController.swift in Sources */,
 				81806D05221BF07A00DA827D /* NewsModel.swift in Sources */,
 				813AAB3C22229B8C00A2F680 /* HistoryViewController.swift in Sources */,
 				81F3BEF6221A89C70069DD7F /* NetworkService.swift in Sources */,

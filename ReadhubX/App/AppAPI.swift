@@ -17,6 +17,9 @@ let api_base: String = "https://api.readhub.cn/"
 let api_topic: String = "topic"
 /// 话题详情 参数：话题id （https://api.readhub.cn/topic/4djhWVo81n9）
 let api_topic_detail: String = "topic/"
+/// 话题即时阅读 参数：话题id （https://api.readhub.cn/topic/instantview?topicId=） 该 api 来源：（https://github.com/BryantPang/ReadHub）
+let api_topic_instantview: String = "topic/instantview?topicId="
+
 /// 科技动态 参数：lastCursor：上一次访问的最后一条资讯的 PublishDate 对应的毫秒时间戳 pageSize：一次请求拉取的数目 （https://api.readhub.cn/news?pageSize=1&lastCursor= || https://api.readhub.cn/news?pageSize=1&lastCursor=1519477905000）
 let api_news: String = "news"
 /// 开发者资讯 参数：lastCursor：上一次访问的最后一条资讯的 PublishDate 对应的毫秒时间戳 pageSize：一次请求拉取的数目 （https://api.readhub.cn/technews?pageSize=1&lastCursor= || https://api.readhub.cn/technews?pageSize=1&lastCursor=1519477905000）
