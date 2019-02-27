@@ -87,6 +87,12 @@ class MoreViewController: UIViewController {
                 URL(string: AppConfig.url) as Any],
             applicationActivities: [])
         
+        // 解决 iPad 分享奔溃
+        if iPad {
+            vc.popoverPresentationController?.sourceView = view
+            vc.popoverPresentationController?.sourceRect = view.frame
+        }
+        
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -170,8 +176,8 @@ class MoreViewController: UIViewController {
                 MoreItem(title: "浏览历史", type: .history)
             ],
             [
-                MoreItem(title: "到 App Store 评分", type: .grade),
-                MoreItem(title: "推荐给朋友", type: .share),
+//                MoreItem(title: "到 App Store 评分", type: .grade),
+//                MoreItem(title: "推荐给朋友", type: .share),
                 MoreItem(title: "意见反馈", type: .feedback),
                 MoreItem(title: "关于 Readhub X", type: .about)
             ]

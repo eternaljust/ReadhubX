@@ -71,16 +71,27 @@ class HistoryViewController: UIViewController {
             navigationItem.rightBarButtonItem = nil
         }
         
+        // 记录条数
+        countLabel.text = "已记录 \(list.count) 条"
+        countLabel.isHidden = true
+        
         tableView.reloadData()
     }
     
     private func setupUI() {
         view.addSubview(tableView)
+        view.addSubview(countLabel)
     }
     
     private func layoutPageSubviews() {
         tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
+        }
+        
+        countLabel.snp.makeConstraints { (make) in
+            make.top.left.equalToSuperview().offset(width_list_space_15)
+            make.right.equalToSuperview().offset(-width_list_space_15)
+            make.height.equalTo(20)
         }
     }
     
@@ -99,6 +110,19 @@ class HistoryViewController: UIViewController {
         tableView.register(HistoryCell.self, forCellReuseIdentifier: "cell")
         
         return tableView
+    }()
+    
+    /// 已记录多少条
+    let countLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = font_14
+        label.textColor = color_888888
+        label.textAlignment = .center
+        label.text = "已记录 条"
+        label.isHidden = true
+        
+        return label
     }()
 }
 
@@ -151,5 +175,22 @@ extension HistoryViewController: EmptyDataSetSource {
         let title: NSAttributedString = NSAttributedString.init(string: "暂无数据", attributes: [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_17, NSAttributedString.Key.foregroundColor: color_000000])
         
         return title
+    }
+}
+
+// MARK: -
+extension HistoryViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetY = scrollView.contentOffset.y
+        
+        // 滚动偏移量
+        if contentOffsetY < -34 {
+            countLabel.isHidden = false
+        } else if contentOffsetY >= -34 && contentOffsetY < -20 {
+            countLabel.isHidden = false
+            countLabel.alpha = (-20 - contentOffsetY) / 14;
+        } else {
+            countLabel.isHidden = true;
+        }
     }
 }

@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.8.1)
+  - Bugly (2.5.0)
   - EmptyDataSet-Swift (4.2.0)
   - GTMRefresh (1.3.6)
   - JXSegmentedView (0.0.4)
@@ -11,6 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Bugly
   - EmptyDataSet-Swift
   - GTMRefresh
   - JXSegmentedView
@@ -21,6 +23,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Bugly
     - EmptyDataSet-Swift
     - GTMRefresh
     - JXSegmentedView
@@ -30,6 +33,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   EmptyDataSet-Swift: 1fa0b35f530a35f852ecb2b53564728b0c300aaf
   GTMRefresh: 9231cbdc1dca88d0a29daead8d6bd83314aa84dc
   JXSegmentedView: 2b036fc37f26fbd369f79b8953c610efe19bd529
@@ -37,6 +41,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
 
-PODFILE CHECKSUM: 44f7a52173f535bbd32c1447162255b6252e4bd5
+PODFILE CHECKSUM: df1d10de58c6ff692ceb051f5ea05a8675322a10
 
 COCOAPODS: 1.6.0

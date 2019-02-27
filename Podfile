@@ -15,6 +15,8 @@ target 'ReadhubX' do
   pod 'PKHUD'
   pod 'JXSegmentedView'
   pod 'SQLite.swift'
+  
+  pod 'Bugly'
 
   target 'ReadhubXTests' do
     inherit! :search_paths

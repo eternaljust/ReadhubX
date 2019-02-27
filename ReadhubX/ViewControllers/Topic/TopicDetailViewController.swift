@@ -17,8 +17,6 @@ class TopicDetailViewController: UIViewController {
     private var topicDetail: TopicDetailModel?
     /// 新闻列表数据源
     private var newsArray: [TopicDetailModel.TopicDetailNewsModel] = []
-    /// 即时查看
-    private var instantview: TopicInstantviewModel?
     
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -60,14 +58,26 @@ class TopicDetailViewController: UIViewController {
         tableView.reloadData()
     }
     
-    @objc private func gotoInstantview(){
-        let vc = TopicInstantviewViewController()
+    @objc private func loadInstantview() {
+        let url = api_base + api_topic_instantview + topicID
         
-        vc.instantview = instantview
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+        HUD.show(.systemActivity, onView: view)
+        NetworkService<TopicInstantviewModel>().requestJSON(url: url) { (jsonModel, message, success) in
+            HUD.hide()
+            
+            if success {
+                DLog(msg: jsonModel)
+                let vc = TopicInstantviewViewController()
+                
+                vc.instantview = jsonModel
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
+            }
+        }
     }
-    
+ 
     // MARK: - private method
     private func loadData() {
         let url = api_base + api_topic_detail + topicID
@@ -85,26 +95,8 @@ class TopicDetailViewController: UIViewController {
                 
                 // 即时查看
                 if (jsonModel?.hasInstantView)! {
-                    self.loadInstantview()
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "instantview"), style: .plain, target: self, action: #selector(self.loadInstantview))
                 }
-            } else {
-                HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
-            }
-        }
-    }
-    
-    private func loadInstantview() {
-        let url = api_base + api_topic_instantview + topicID
-        
-        HUD.show(.systemActivity, onView: view)
-        NetworkService<TopicInstantviewModel>().requestJSON(url: url) { (jsonModel, message, success) in
-            HUD.hide()
-            
-            if success {
-                DLog(msg: jsonModel)
-                self.instantview = jsonModel
-                
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "instantview"), style: .plain, target: self, action: #selector(self.gotoInstantview))
             } else {
                 HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
             }

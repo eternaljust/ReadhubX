@@ -115,10 +115,10 @@ class StartViewController: UIViewController {
     
     /// 列表数据源
     private lazy var dataSource : [StartItem] = {
-        return [ StartItem(title: "热门话题", info: "互联网行业里发生的"),
-                 StartItem(title: "科技动态", info: "互联网行业里发生的"),
-                 StartItem(title: "开发者资讯", info: "互联网行业里发生的"),
-                 StartItem(title: "区块链快讯", info: "互联网行业里发生的")
+        return [ StartItem(title: "热门话题", info: "互联网行业每天值得关注的事情"),
+                 StartItem(title: "科技动态", info: "互联网行业的科技新闻报道"),
+                 StartItem(title: "开发者资讯", info: "互联网行业里开发者关心的信息"),
+                 StartItem(title: "区块链快讯", info: "互联网行业区块链领域的实时要闻")
         ]
     }()
 }

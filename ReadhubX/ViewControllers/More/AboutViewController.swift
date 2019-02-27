@@ -135,7 +135,7 @@ class AboutViewController: UIViewController {
             [
                 AboutItem(title: "URL Schemes", type: .urlSchemes),
                 AboutItem(title: "清理缓存", type: .reset),
-                AboutItem(title: "更新版本", type: .update)
+//                AboutItem(title: "更新版本", type: .update)
             ],
             [
                 AboutItem(title: "开源库", type: .pods),

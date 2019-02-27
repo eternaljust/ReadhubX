@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Bugly
 
 @UIApplicationMain
 
@@ -53,6 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         
         UIApplication.shared.shortcutItems = shortcutItems
+        
+        // 奔溃信息收集 Bugly
+        Bugly.start(withAppId: AppConfig.BuglyAppId)
         
         return true
     }
