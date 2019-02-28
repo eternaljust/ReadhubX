@@ -1,8 +1,8 @@
 //
-//  TopicInstantviewViewController.swift
+//  NewsDetailViewController.swift
 //  ReadhubX
 //
-//  Created by Awro on 2019/2/26.
+//  Created by Awro on 2019/2/28.
 //  Copyright © 2019 EJ. All rights reserved.
 //
 
@@ -10,19 +10,22 @@ import UIKit
 import WebKit
 import PKHUD
 
-/// 话题即时查看
-class TopicInstantviewViewController: UIViewController {
-    /// 即时查看 instantview
-    var instantview: TopicInstantviewModel?
+/// 资讯详情 ViewController
+class NewsDetailViewController: UIViewController {
+    /// 资讯详情 标题
+    var newsTitle: String?
+    /// 资讯详情 url
+    var newsURL: String?
     
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.viewControllerConfig()
         view.backgroundColor = color_ffffff
-        navigationItem.title = "即时查看"
-        
+        navigationItem.title = "资讯详情"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "safari"), style: .plain, target: self, action: #selector(self.gotoSafari))
+
         setupUI()
         layoutPageSubviews()
         loadHTML()
@@ -34,8 +37,8 @@ class TopicInstantviewViewController: UIViewController {
     
     // MARK: - event response
     @objc private func gotoSafari() {
-        let vc = BaseSafariViewController(url: URL(string: (instantview?.url)!)!, configuration: BaseSafariViewController.Configuration())
-
+        let vc = BaseSafariViewController(url: URL(string: newsURL!)!, configuration: BaseSafariViewController.Configuration())
+        
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -57,25 +60,9 @@ class TopicInstantviewViewController: UIViewController {
     
     // MARK: - private method
     private func loadHTML() {
-        // 感谢 https://github.com/BryantPang/ReadHub
-        let htmlHead = "<head>"
-            +
-            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> "
-            + "<link rel=\"stylesheet\" href=\"https://unpkg.com/mobi.css/dist/mobi.min.css\">"
-            + "<style>"
-            + "img{max-width:100% !important; width:auto; height:auto;}"
-            + "body {font-size: 100%;word-spacing:100%；}"
-            + "</style>"
-            + "</head>"
-        
-        let htmlContent = "<html>"
-            + htmlHead
-            + "<body style:'height:auto; max-width: 100%; width:auto;'>"
-            + (instantview?.content)!
-        
-        webView.loadHTMLString(htmlContent, baseURL: nil)
+        webView.load(URLRequest(url: URL(string: newsURL!)!))
     }
-
+    
     private func setupUI() {
         view.addSubview(headerView)
         view.addSubview(webView)
@@ -87,7 +74,7 @@ class TopicInstantviewViewController: UIViewController {
             make.top.equalToSuperview()
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            make.height.equalTo(110)
+            make.height.equalTo(76)
         }
         
         webView.snp.makeConstraints { (make) in
@@ -106,13 +93,10 @@ class TopicInstantviewViewController: UIViewController {
     
     // MARK: - setter getter
     /// headerView
-    private lazy var headerView: TopicInstantviewHeaderView = {
-        let view: TopicInstantviewHeaderView = TopicInstantviewHeaderView()
+    private lazy var headerView: NewsDetailHeaderView = {
+        let view: NewsDetailHeaderView = NewsDetailHeaderView()
         
-        view.urlButton.addTarget(self, action: #selector(gotoSafari), for: .touchUpInside)
-        
-        view.siteNameLabel.text = "来源：\(instantview?.siteName ?? "来源")"
-        view.titleLabel.text = instantview?.title ?? "标题"
+        view.titleLabel.text = newsTitle ?? "标题"
         
         return view
     }()
@@ -124,7 +108,7 @@ class TopicInstantviewViewController: UIViewController {
         web.navigationDelegate = self
         // 监听进度条
         web.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
-
+        
         return web
     }()
     
@@ -140,7 +124,7 @@ class TopicInstantviewViewController: UIViewController {
 }
 
 // MARK: - WKNavigationDelegate
-extension TopicInstantviewViewController: WKNavigationDelegate {
+extension NewsDetailViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
     }

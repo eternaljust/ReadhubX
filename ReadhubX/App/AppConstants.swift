@@ -231,9 +231,9 @@ struct AppConfig {
     /// App 的标题
     static let title: String = "Readhub X - 每天花几分钟了解一下互联网行业里发生的事情。"
     /// App Store 的链接
-    static let url: String = "https://itunes.apple.com/app/id1308118507"
+    static let url: String = "https://itunes.apple.com/app/id1454381627"
     /// App Store 的评分链接
-    static let gradeURL: String = "itms-apps://itunes.apple.com/app/id1308118507?mt=8&action=write-review"
+    static let gradeURL: String = "itms-apps://itunes.apple.com/app/id1454381627?mt=8&action=write-review"
     /// App 奔溃信息收集 Bugly AppId
     static let BuglyAppId: String = "9f506f0ca2"
     

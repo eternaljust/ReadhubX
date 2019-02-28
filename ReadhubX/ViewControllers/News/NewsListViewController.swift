@@ -205,9 +205,12 @@ extension NewsListViewController: UITableViewDelegate {
         SQLiteDBService.shared.addHistory(id: "\(news.id)", type: 1, title: (news.title), time: Date().timeIntervalSince1970, url: (news.mobileUrl), language: news.language, extra: "")
         tableView.reloadRows(at: [indexPath], with: .none)
         
-        let vc = BaseSafariViewController(url: URL(string: news.mobileUrl)!)
+        let vc = NewsDetailViewController()
         
-        viewController?.present(vc, animated: true, completion: nil)
+        vc.newsTitle = news.title
+        vc.newsURL = news.mobileUrl
+        
+        viewController!.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

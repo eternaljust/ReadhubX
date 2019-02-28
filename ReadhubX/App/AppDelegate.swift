@@ -64,26 +64,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - event response
     private func topic() {
         // 如果当前正在资讯网页浏览 safariVC
-        if rootViewController?.selectedIndex == 1 {
-            let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
-
-            navi.topViewController?.dismiss(animated: false, completion: nil)
-        }
+        let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
+        
+        navi.topViewController?.dismiss(animated: false, completion: nil)
         
         rootViewController?.selectedIndex = 0
 
-        let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
+        let navi0: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
         // App 当前正在查看话题详情
-        navi.popToRootViewController(animated: false)
+        navi0.popToRootViewController(animated: false)
     }
     
     private func news(selectedIndex: Int) {
+        // 如果当前正在资讯网页浏览 safariVC
+        let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
+        
+        navi.topViewController?.dismiss(animated: false, completion: nil)
+        
         rootViewController?.selectedIndex = 1
         
-        let navi: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
-        let newsVC: NewsViewController = navi.topViewController as! NewsViewController
-        // App 当前正在浏览资讯，可能资讯导航跳转了 safariVC
-        navi.dismiss(animated: false, completion: nil)
+        let navi1: NavigationViewController = rootViewController?.selectedViewController as! NavigationViewController
+        // App 当前正在浏览资讯详情
+        navi1.popToRootViewController(animated: false)
+
+        let newsVC: NewsViewController = navi1.topViewController as! NewsViewController
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             newsVC.segmentedView.selectItemAt(index: selectedIndex)

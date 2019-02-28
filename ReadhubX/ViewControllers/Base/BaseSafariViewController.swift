@@ -17,4 +17,11 @@ class BaseSafariViewController: SFSafariViewController {
 
         preferredControlTintColor = color_theme
     }
+
+    override init(url URL: URL, configuration: SFSafariViewController.Configuration) {
+        // 阅读模式
+        configuration.entersReaderIfAvailable = true
+        
+        super.init(url: URL, configuration: configuration)
+    }
 }

@@ -26,6 +26,10 @@
 		8153BCBE222143AA009F8EF6 /* TopicDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153BCBD222143AA009F8EF6 /* TopicDetailModel.swift */; };
 		8153BCC2222146BF009F8EF6 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153BCC1222146BF009F8EF6 /* TopicDetailViewController.swift */; };
 		81806D05221BF07A00DA827D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81806D04221BF07A00DA827D /* NewsModel.swift */; };
+		81AE90F02227802800660FB2 /* NewsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AE90EF2227802800660FB2 /* NewsDetailViewController.swift */; };
+		81AE90F2222786B200660FB2 /* NewsDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AE90F1222786B200660FB2 /* NewsDetailHeaderView.swift */; };
+		81AE90F52227B78D00660FB2 /* third-party.html in Resources */ = {isa = PBXBuildFile; fileRef = 81AE90F42227B78D00660FB2 /* third-party.html */; };
+		81AE90F72227B7F900660FB2 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AE90F62227B7F900660FB2 /* WebViewViewController.swift */; };
 		81C13E07221A4A39000A017B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C13E06221A4A39000A017B /* AppDelegate.swift */; };
 		81C13E0E221A4A3D000A017B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81C13E0D221A4A3D000A017B /* Assets.xcassets */; };
 		81C13E11221A4A3D000A017B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81C13E0F221A4A3D000A017B /* LaunchScreen.storyboard */; };
@@ -94,6 +98,10 @@
 		8153BCBD222143AA009F8EF6 /* TopicDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailModel.swift; sourceTree = "<group>"; };
 		8153BCC1222146BF009F8EF6 /* TopicDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailViewController.swift; sourceTree = "<group>"; };
 		81806D04221BF07A00DA827D /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		81AE90EF2227802800660FB2 /* NewsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailViewController.swift; sourceTree = "<group>"; };
+		81AE90F1222786B200660FB2 /* NewsDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailHeaderView.swift; sourceTree = "<group>"; };
+		81AE90F42227B78D00660FB2 /* third-party.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "third-party.html"; sourceTree = "<group>"; };
+		81AE90F62227B7F900660FB2 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		81C13E03221A4A39000A017B /* ReadhubX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReadhubX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C13E06221A4A39000A017B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81C13E0D221A4A3D000A017B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -154,6 +162,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		81AE90F32227B77A00660FB2 /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				81AE90F42227B78D00660FB2 /* third-party.html */,
+			);
+			path = HTML;
+			sourceTree = "<group>";
+		};
 		81C13DFA221A4A39000A017B = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +237,7 @@
 		81F3BEE5221A669F0069DD7F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				81AE90F32227B77A00660FB2 /* HTML */,
 				81C13E0D221A4A3D000A017B /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -283,6 +300,7 @@
 			children = (
 				81F3BF08221ABE9A0069DD7F /* NewsViewController.swift */,
 				8105F8E5221E4914001E3867 /* NewsListViewController.swift */,
+				81AE90EF2227802800660FB2 /* NewsDetailViewController.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -305,6 +323,7 @@
 				81F3BF01221A8D100069DD7F /* StartViewController.swift */,
 				81F3BF12221ABF900069DD7F /* TabBarViewController.swift */,
 				8105F8ED221EB12D001E3867 /* BaseSafariViewController.swift */,
+				81AE90F62227B7F900660FB2 /* WebViewViewController.swift */,
 				8105F8EF221EC838001E3867 /* NavigationViewController.swift */,
 			);
 			path = Base;
@@ -334,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				81F3BF0E221ABEDF0069DD7F /* NewsCell.swift */,
+				81AE90F1222786B200660FB2 /* NewsDetailHeaderView.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -499,6 +519,7 @@
 			files = (
 				81C13E11221A4A3D000A017B /* LaunchScreen.storyboard in Resources */,
 				81C13E0E221A4A3D000A017B /* Assets.xcassets in Resources */,
+				81AE90F52227B78D00660FB2 /* third-party.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +649,7 @@
 			files = (
 				8105F8F2221ECFFA001E3867 /* URLSchemesViewController.swift in Sources */,
 				81F3BEF3221A87970069DD7F /* String+Extension.swift in Sources */,
+				81AE90F72227B7F900660FB2 /* WebViewViewController.swift in Sources */,
 				8105F8EA221EA45B001E3867 /* AboutViewController.swift in Sources */,
 				8105F8F0221EC838001E3867 /* NavigationViewController.swift in Sources */,
 				81F3BF0B221ABEA70069DD7F /* MoreViewController.swift in Sources */,
@@ -650,6 +672,8 @@
 				81F3BF13221ABF900069DD7F /* TabBarViewController.swift in Sources */,
 				81F3BF02221A8D100069DD7F /* StartViewController.swift in Sources */,
 				81F3BEED221A6A130069DD7F /* JSON.swift in Sources */,
+				81AE90F02227802800660FB2 /* NewsDetailViewController.swift in Sources */,
+				81AE90F2222786B200660FB2 /* NewsDetailHeaderView.swift in Sources */,
 				81F3BEE8221A66DF0069DD7F /* AppConstants.swift in Sources */,
 				8105F8EC221EA4A8001E3867 /* AboutHeaderView.swift in Sources */,
 				8105F8EE221EB12D001E3867 /* BaseSafariViewController.swift in Sources */,

@@ -107,8 +107,8 @@ extension PodsViewController: UITableViewDataSource {
 extension PodsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = dataSource[indexPath.section][indexPath.row]
-        let vc = BaseSafariViewController(url: URL(string: item.url)!)
-        
+        let vc = BaseSafariViewController(url: URL(string: item.url)!, configuration: BaseSafariViewController.Configuration())
+
         self.present(vc, animated: true, completion: nil)
     }
 }

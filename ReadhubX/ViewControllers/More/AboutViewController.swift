@@ -24,6 +24,8 @@ class AboutViewController: UIViewController {
         /// 项目源码
         case repository
         
+        /// 第三方内容条款
+        case thirdParty
         /// 关于
         case about
     }
@@ -84,15 +86,24 @@ class AboutViewController: UIViewController {
     }
     
     private func gotoRepository() {
-        let vc = BaseSafariViewController(url: URL(string: AppConfig.appRepository)!)
-        
+        let vc = BaseSafariViewController(url: URL(string: AppConfig.appRepository)!, configuration: BaseSafariViewController.Configuration())
+
         self.present(vc, animated: true, completion: nil)
     }
     
     private func gotoAbout() {
-        let vc = BaseSafariViewController(url: URL(string: AppConfig.readhubIntroURL)!)
-
+        let vc = BaseSafariViewController(url: URL(string: AppConfig.readhubIntroURL)!, configuration: BaseSafariViewController.Configuration())
+        
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func gotoThirdParty() {
+        let url: URL = Bundle.main.url(forResource: "third-party", withExtension: "html")!
+        let vc = WebViewViewController()
+        
+        vc.URL = url
+
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK: - private method
@@ -142,6 +153,7 @@ class AboutViewController: UIViewController {
                 AboutItem(title: "项目源码", type: .repository)
             ],
             [
+                AboutItem(title: "Readhub X 第三方内容条款", type: .thirdParty),
                 AboutItem(title: "关于 Readhub", type: .about)
             ]
         ]
@@ -186,7 +198,9 @@ extension AboutViewController: UITableViewDelegate {
             gotoPods()
         case .repository:
             gotoRepository()
-            
+          
+        case .thirdParty:
+            gotoThirdParty()
         case .about:
             gotoAbout()
         }

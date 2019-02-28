@@ -29,6 +29,7 @@ class StartViewController: UIViewController {
         
         setupUI()
         layoutPageSubviews()
+        checkThirdPartyAgree()
     }
     
     // MARK: - event response
@@ -40,11 +41,40 @@ class StartViewController: UIViewController {
         }
     }
     
+    @objc private func clickCheckButton() {
+        checkButton.isSelected = !checkButton.isSelected
+        
+        // 开始按钮的状态
+        startButton.backgroundColor = checkButton.isSelected ? color_theme_button_normal : color_theme_button_disable
+        startButton.isEnabled = checkButton.isSelected
+    }
+    
+    private func gotoThirdParty() {
+        self.present(thirdPartyNavi, animated: true, completion: nil)
+    }
+    
+    @objc private func clickBackButton() {
+        thirdPartyNavi.dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - private method
+    private func checkThirdPartyAgree() {
+        // 当前 App 的构建版本
+        let build = UserDefaults.standard.string(forKey: AppConfig.build)
+        
+        // 只有第一次打开 App 显示
+        if build != nil {
+            checkButton.isHidden = true
+            readTextView.isHidden = true
+        }
+    }
+    
     private func setupUI() {
         view.addSubview(titleLabel)
         view.addSubview(tableView)
         view.addSubview(startButton)
+        view.addSubview(readTextView)
+        view.addSubview(checkButton)
     }
     
     private func layoutPageSubviews() {
@@ -61,10 +91,22 @@ class StartViewController: UIViewController {
         }
         
         startButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-width_large_button_space_34)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-43)
             make.left.equalToSuperview().offset(width_large_button_space_34)
             make.right.equalToSuperview().offset(-width_large_button_space_34)
             make.height.equalTo(height_large_button_47)
+        }
+        
+        readTextView.snp.makeConstraints { (make) in
+            make.top.equalTo(startButton.snp.bottom).offset(3)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(25)
+        }
+        
+        checkButton.snp.makeConstraints { (make) in
+            make.right.equalTo(readTextView.snp.left).offset(-3)
+            make.centerY.equalTo(readTextView).offset(2)
+            make.size.equalTo(CGSize(width: 18, height: 18))
         }
     }
     
@@ -113,6 +155,54 @@ class StartViewController: UIViewController {
         return button
     }()
     
+    /// 阅读条款
+    private lazy var readTextView: UITextView = {
+        let attributedString = NSMutableAttributedString(string: "我了解并阅读《Readhub X 第三方内容条款》")
+        let range1 = NSMakeRange(6, attributedString.length - 6)
+        
+        attributedString.addAttribute(NSAttributedString.Key.link, value: NSURL(string:"link://")!, range: range1);
+        attributedString.addAttribute(NSAttributedString.Key.baselineOffset, value: 0, range: NSMakeRange(0, attributedString.length))
+        
+        let textView = UITextView()
+        
+        textView.font = font_20
+        textView.isScrollEnabled = false
+        textView.isEditable = false
+        textView.text = attributedString.string
+        textView.textColor = color_000000;
+        textView.textAlignment = .center
+        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: color_theme]
+        textView.dataDetectorTypes = .all;
+        textView.delegate = self;
+        textView.attributedText = attributedString
+        
+        return textView
+    }()
+    
+    /// 勾选按钮
+    private lazy var checkButton: UIButton = {
+        let button = UIButton()
+        
+        button.setBackgroundImage(#imageLiteral(resourceName: "check"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "check_selected"), for: .selected)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(clickCheckButton), for: .touchUpInside)
+
+        return button
+    }()
+    
+    /// 跳转第三方内容条款的 navi
+    private lazy var thirdPartyNavi: NavigationViewController = {
+        let url: URL = Bundle.main.url(forResource: "third-party", withExtension: "html")!
+        let vc = WebViewViewController()
+        vc.URL = url
+        
+        let navi = NavigationViewController(rootViewController: vc)
+        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(clickBackButton))
+        
+        return navi
+    }()
+    
     /// 列表数据源
     private lazy var dataSource : [StartItem] = {
         return [ StartItem(title: "热门话题", info: "互联网行业每天值得关注的事情"),
@@ -144,5 +234,16 @@ extension StartViewController: UITableViewDataSource {
 extension StartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 77
+    }
+}
+
+// MARK: - UITextViewDelegate
+extension StartViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        if ((URL.scheme?.range(of: "link")) != nil) {
+            gotoThirdParty()
+            return false;
+        }
+        return true
     }
 }

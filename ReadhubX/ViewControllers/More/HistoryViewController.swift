@@ -152,9 +152,12 @@ extension HistoryViewController: UITableViewDelegate {
         let history = list[indexPath.row]
         
         if history.type == 1 {
-            let vc = BaseSafariViewController(url: URL(string: history.url)!)
+            let vc = NewsDetailViewController()
             
-            self.present(vc, animated: true, completion: nil)
+            vc.newsTitle = history.title
+            vc.newsURL = history.url
+            
+            self.navigationController?.pushViewController(vc, animated: true)
         } else {
             let vc = TopicDetailViewController()
             
