@@ -37,6 +37,8 @@ struct TopicDetailModel: Codable {
         var mobileUrl: String = AppConfig.defaultURL
         /// 资讯新闻语言（zh-cn：中文 en：英文）
         var language: String = AppConfig.cnLanguage
+        /// 资讯发布时间
+        var publishDate: String = ""
     }
     
     /// 相关事件

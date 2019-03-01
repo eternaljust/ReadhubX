@@ -62,11 +62,10 @@ class StartViewController: UIViewController {
         // 当前 App 的构建版本
         let build = UserDefaults.standard.string(forKey: AppConfig.build)
         
-        // 只有第一次打开 App 显示
-        if build != nil {
-            checkButton.isHidden = true
-            readTextView.isHidden = true
-        }
+        // 只有第一次打开 App 按钮不可点击
+        checkButton.isSelected = build != nil ? false : true
+        
+        clickCheckButton()
     }
     
     private func setupUI() {

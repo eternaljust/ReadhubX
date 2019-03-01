@@ -185,7 +185,8 @@ extension NewsListViewController: UITableViewDataSource {
         
         let date: Date = news.publishDate.date()!
         let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: false)
-        cell.infoLabel.text = news.siteName + " / " + news.authorName + " " + time
+//        cell.infoLabel.text = news.siteName + " / " + news.authorName + " " + time
+        cell.infoLabel.text = time
         
         // 查找历史记录阅读
         let history: Bool = SQLiteDBService.shared.searchHistory(id: "\(news.id)")

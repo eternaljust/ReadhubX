@@ -24,7 +24,7 @@ class NewsDetailViewController: UIViewController {
         self.viewControllerConfig()
         view.backgroundColor = color_ffffff
         navigationItem.title = "资讯详情"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "safari"), style: .plain, target: self, action: #selector(self.gotoSafari))
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "safari"), style: .plain, target: self, action: #selector(self.gotoSafari))
 
         setupUI()
         layoutPageSubviews()

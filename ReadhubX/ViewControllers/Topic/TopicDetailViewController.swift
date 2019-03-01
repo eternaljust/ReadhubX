@@ -48,6 +48,10 @@ class TopicDetailViewController: UIViewController {
             return true
         }
         topicDetail?.newsArray = filterNewsArray
+        // 时间排序
+        topicDetail?.newsArray.sort(by: { (news1, news2) -> Bool in
+            return (news1.publishDate.date()?.timeIntervalSince1970)! > (news2.publishDate.date()?.timeIntervalSince1970)!
+        })
         
         // 过滤掉相关话题列表中包含当前的话题
         let fileterTopics = topicDetail?.timeline?.topics.filter({ (topic) -> Bool in
@@ -189,7 +193,10 @@ extension TopicDetailViewController: UITableViewDataSource {
             let news = topicDetail?.newsArray[indexPath.row]
             
             cell.titleLabel.text = news?.title
-            cell.infoLabel.text = news?.siteName
+//            cell.infoLabel.text = news?.siteName
+            let date: Date = (news?.publishDate.date()!)!
+            let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: true)
+            cell.infoLabel.text = time
             
             // 查找历史记录阅读
             let history: Bool = SQLiteDBService.shared.searchHistory(id: (news?.id)!)
@@ -262,7 +269,7 @@ extension TopicDetailViewController: UITableViewDelegate {
         if section == 0 {
             return nil
         } else if section == 1 {
-            header.titleLabel.text = newsArrayCount() ? "媒体报道" : nil
+            header.titleLabel.text = newsArrayCount() ? "相关报道" : nil
         } else {
             header.titleLabel.text = timelineTopicsCount() ? "相关事件" : nil
         }

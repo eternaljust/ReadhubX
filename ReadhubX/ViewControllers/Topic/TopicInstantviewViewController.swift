@@ -87,7 +87,7 @@ class TopicInstantviewViewController: UIViewController {
             make.top.equalToSuperview()
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            make.height.equalTo(110)
+            make.height.equalTo(76) // 110
         }
         
         webView.snp.makeConstraints { (make) in
@@ -105,13 +105,13 @@ class TopicInstantviewViewController: UIViewController {
     }
     
     // MARK: - setter getter
-    /// headerView
-    private lazy var headerView: TopicInstantviewHeaderView = {
-        let view: TopicInstantviewHeaderView = TopicInstantviewHeaderView()
+    /// headerView 即时查看 TopicInstantviewHeaderView || 标题 NewsDetailHeaderView
+    private lazy var headerView: NewsDetailHeaderView = {
+        let view: NewsDetailHeaderView = NewsDetailHeaderView()
         
-        view.urlButton.addTarget(self, action: #selector(gotoSafari), for: .touchUpInside)
+//        view.urlButton.addTarget(self, action: #selector(gotoSafari), for: .touchUpInside)
         
-        view.siteNameLabel.text = "来源：\(instantview?.siteName ?? "来源")"
+//        view.siteNameLabel.text = "来源：\(instantview?.siteName ?? "来源")"
         view.titleLabel.text = instantview?.title ?? "标题"
         
         return view
