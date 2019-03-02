@@ -229,20 +229,21 @@ extension TopicDetailViewController: UITableViewDelegate {
             let news = topicDetail?.newsArray[indexPath.row]
 
             // 增加一条资讯历史记录
-            SQLiteDBService.shared.addHistory(id: (news?.id)!, type: 1, title: (news?.title)!, time: Date().timeIntervalSince1970, url: (news?.mobileUrl)!, language:(news?.language)!, extra: "")
+            SQLiteDBService.shared.addHistory(id: (news?.id)!, type: 1, title: (news?.title)!, time: Date().timeIntervalSince1970, url: (news?.mobileUrl)!, language: (news?.language)!, summary: "", publishDate: (news?.publishDate)!, extra: "")
             tableView.reloadRows(at: [indexPath], with: .none)
             
             let vc = NewsDetailViewController()
             
             vc.newsTitle = news!.title
-            vc.newsURL = news!.mobileUrl
+            vc.newsSummary = ""
+            vc.newsPublishDate = news?.publishDate
             
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
             let topic = topicDetail?.timeline?.topics[indexPath.row]
             
             // 增加一条话题历史记录
-            SQLiteDBService.shared.addHistory(id: (topic?.id)!, type: 0, title: (topic?.title)!, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, extra: "")
+            SQLiteDBService.shared.addHistory(id: (topic?.id)!, type: 0, title: (topic?.title)!, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, summary: "", publishDate: (topic?.createdAt)!, extra: "")
             tableView.reloadRows(at: [indexPath], with: .none)
             
             let vc = TopicDetailViewController()

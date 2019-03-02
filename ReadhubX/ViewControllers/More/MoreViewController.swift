@@ -172,7 +172,7 @@ class MoreViewController: UIViewController {
         return [
             [
                 MoreItem(title: "热门话题摘要", type: .topic),
-                MoreItem(title: "科技动态英文新闻", type: .english),
+//                MoreItem(title: "科技动态英文新闻", type: .english),
                 MoreItem(title: "浏览历史", type: .history)
             ],
             [

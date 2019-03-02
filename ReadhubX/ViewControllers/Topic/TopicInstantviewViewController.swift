@@ -148,4 +148,19 @@ extension TopicInstantviewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         HUD.flash(.label(error.localizedDescription), delay: AppConfig.HUDTextDelay)
     }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        // 禁止访问跳转 url
+        var url: String = navigationAction.request.url?.absoluteString ?? "     "
+        if url.count < 4 {
+            url = "https"
+        }
+        let http: String = String(url.prefix(4))
+        
+        if http == "http" {
+            decisionHandler(WKNavigationActionPolicy.cancel)
+        } else {
+            decisionHandler(WKNavigationActionPolicy.allow)
+        }
+    }
 }

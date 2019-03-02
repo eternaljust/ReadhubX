@@ -27,6 +27,16 @@ extension String {
         return dateformatter.date(from: self)
     }
     
+    /// 详细时间
+    func yyyy_MM_dd_HH_mm_ss() -> String {
+        let date = self.date()
+        let dateformatter = DateFormatter()
+
+        dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+        return dateformatter.string(from: date ?? Date())
+    }
+    
     /// 字符串转时间戳
     func timeStamp() -> String {
         let time: TimeInterval = self.date()!.timeIntervalSince1970 * 1000

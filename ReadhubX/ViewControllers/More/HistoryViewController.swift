@@ -155,7 +155,8 @@ extension HistoryViewController: UITableViewDelegate {
             let vc = NewsDetailViewController()
             
             vc.newsTitle = history.title
-            vc.newsURL = history.url
+            vc.newsSummary = history.summary
+            vc.newsPublishDate = history.publishDate
             
             self.navigationController?.pushViewController(vc, animated: true)
         } else {

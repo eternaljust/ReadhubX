@@ -181,7 +181,7 @@ extension NewsListViewController: UITableViewDataSource {
         let news = filterList[indexPath.row]
         
         cell.titleLabel.text = news.title
-        cell.summaryLabel.text = news.summary
+//        cell.summaryLabel.text = news.summary
         
         let date: Date = news.publishDate.date()!
         let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: false)
@@ -203,13 +203,14 @@ extension NewsListViewController: UITableViewDelegate {
         let news = filterList[indexPath.row]
         
         // 增加一条资讯历史记录
-        SQLiteDBService.shared.addHistory(id: "\(news.id)", type: 1, title: (news.title), time: Date().timeIntervalSince1970, url: (news.mobileUrl), language: news.language, extra: "")
+        SQLiteDBService.shared.addHistory(id: "\(news.id)", type: 1, title: (news.title), time: Date().timeIntervalSince1970, url: (news.mobileUrl), language: news.language, summary: news.summary, publishDate: news.publishDate, extra: "")
         tableView.reloadRows(at: [indexPath], with: .none)
         
         let vc = NewsDetailViewController()
         
         vc.newsTitle = news.title
-        vc.newsURL = news.mobileUrl
+        vc.newsSummary = news.summary
+        vc.newsPublishDate = news.publishDate
         
         viewController!.navigationController?.pushViewController(vc, animated: true)
     }

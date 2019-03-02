@@ -176,7 +176,7 @@ extension TopicViewController: UITableViewDelegate {
         let topic = list[indexPath.row]
         
         // 增加一条话题历史记录
-        SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, extra: "")
+        SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, summary: topic.summary, publishDate: topic.createdAt, extra: "")
         tableView.reloadRows(at: [indexPath], with: .none)
         
         let vc = TopicDetailViewController()

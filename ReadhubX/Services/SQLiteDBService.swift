@@ -24,6 +24,10 @@ class SQLiteDBService: NSObject {
     private let history_url_column = Expression<String>("url")
     /// 历史记录资讯新闻语言（zh-cn：中文 en：英文）
     private let history_language_column = Expression<String>("language")
+    /// 历史记录摘要
+    private let history_summary_column = Expression<String>("summary")
+    /// 历史记录发布时间
+    private let history_publishDate_column = Expression<String>("publishDate")
     /// 历史记录 extra 预留额外的扩展字段：json 字符串
     private let history_extra_column = Expression<String>("extra")
     
@@ -58,6 +62,8 @@ class SQLiteDBService: NSObject {
                 t.column(history_title_column)
                 t.column(history_url_column)
                 t.column(history_language_column)
+                t.column(history_summary_column)
+                t.column(history_publishDate_column)
                 t.column(history_extra_column)
             })
            
@@ -68,7 +74,7 @@ class SQLiteDBService: NSObject {
     
     // MARK: - public method
     /// 增一条历史记录(type: 0话题 1资讯 extra 预留额外的扩展字段：json 字符串)
-    func addHistory(id: String, type: Int, title: String, time: TimeInterval, url: String, language: String, extra: String) {
+    func addHistory(id: String, type: Int, title: String, time: TimeInterval, url: String, language: String, summary: String, publishDate: String, extra: String) {
         // 是否已经浏览
         let history = searchHistory(id: id)
         if history {
@@ -77,7 +83,7 @@ class SQLiteDBService: NSObject {
             return
         }
         
-        let insert = getHistoryTable().insert(history_type_column <- type, history_time_column <- time, history_id_column <- id, history_title_column <- title, history_url_column <- url, history_language_column <- language, history_extra_column <- extra)
+        let insert = getHistoryTable().insert(history_type_column <- type, history_time_column <- time, history_id_column <- id, history_title_column <- title, history_url_column <- url, history_language_column <- language, history_summary_column <- summary, history_publishDate_column <- publishDate, history_extra_column <- extra)
         if let rowId = try? getDB().run(insert) {
             DLog(msg: "插入成功：\(rowId)")
         } else {
@@ -112,9 +118,9 @@ class SQLiteDBService: NSObject {
         var historys = [HistoryModel]()
         
         for column in try! getDB().prepare(getHistoryTable().order(history_time_column.desc)) {
-            historys.append(HistoryModel(id: column[history_id_column], type: column[history_type_column], title: column[history_title_column], time: column[history_time_column], url: column[history_url_column], language: column[history_language_column], extra: column[history_extra_column]))
+            historys.append(HistoryModel(id: column[history_id_column], type: column[history_type_column], title: column[history_title_column], time: column[history_time_column], url: column[history_url_column], language: column[history_language_column], summary: column[history_summary_column], publishDate: column[history_publishDate_column], extra: column[history_extra_column]))
             
-            DLog(msg: "searchHistory id: \(column[history_id_column]), type: \(column[history_type_column]), title: \(column[history_title_column]), time: \(column[history_time_column]), url: \(column[history_url_column]), language: \(column[history_language_column]), extra: \(column[history_extra_column])")
+            DLog(msg: "searchHistory id: \(column[history_id_column]), type: \(column[history_type_column]), title: \(column[history_title_column]), time: \(column[history_time_column]), url: \(column[history_url_column]), language: \(column[history_language_column]), summary: \(column[history_summary_column]), publishDate: \(column[history_publishDate_column]), extra: \(column[history_extra_column])")
         }
 
         return historys

@@ -22,6 +22,10 @@ struct HistoryModel: Codable {
     var url: String = AppConfig.defaultURL
     /// 资讯新闻语言（zh-cn：中文 en：英文）
     var language: String = AppConfig.cnLanguage
+    /// 摘要
+    var summary: String = ""
+    /// 发布时间
+    var publishDate: String = ""
     /// extra 预留额外的扩展字段：json 字符串
     var extra: String = ""
 }

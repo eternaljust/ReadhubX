@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootViewController = (window?.rootViewController as! TabBarViewController)
         window?.makeKeyAndVisible()
         
+        // 暂时关闭英文资讯展示
+        UserDefaults.standard.set("1", forKey: AppConfig.englishSwitchOff)
+        
         /// 第一次或者更新版本之后打开 App
         let vc = StartViewController()
         
