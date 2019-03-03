@@ -98,9 +98,9 @@ class TopicDetailViewController: UIViewController {
                 self.newsListFilter()
                 
                 // 即时查看
-                if (jsonModel?.hasInstantView)! {
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "instantview"), style: .plain, target: self, action: #selector(self.loadInstantview))
-                }
+//                if (jsonModel?.hasInstantView)! {
+//                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "instantview"), style: .plain, target: self, action: #selector(self.loadInstantview))
+//                }
             } else {
                 HUD.flash(.label(message), delay: AppConfig.HUDTextDelay)
             }
