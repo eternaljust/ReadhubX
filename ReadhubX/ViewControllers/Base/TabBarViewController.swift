@@ -62,18 +62,18 @@ class TabBarViewController: UITabBarController {
     private func setupTabBar() {
         addChildViewController(childController: TopicViewController(),
                                title: "话题",
-                               normalImage: #imageLiteral(resourceName: "topic"),
-                               selectedImageName: #imageLiteral(resourceName: "topic_selected"))
+                               normalImage: #imageLiteral(resourceName: "tabbar_topic"),
+                               selectedImageName: #imageLiteral(resourceName: "tabbar_topic_selected"))
         
         addChildViewController(childController: NewsViewController(),
                                title: "资讯",
-                               normalImage: #imageLiteral(resourceName: "news"),
-                               selectedImageName: #imageLiteral(resourceName: "news_selected"))
+                               normalImage: #imageLiteral(resourceName: "tabbar_news"),
+                               selectedImageName: #imageLiteral(resourceName: "tabbar_news_selected"))
         
         addChildViewController(childController: MoreViewController(),
                                title: "更多",
-                               normalImage: #imageLiteral(resourceName: "more"),
-                               selectedImageName: #imageLiteral(resourceName: "more_selected"))
+                               normalImage: #imageLiteral(resourceName: "tabbar_more"),
+                               selectedImageName: #imageLiteral(resourceName: "tabbar_more_selected"))
     }
     
     private func addChildViewController(childController: UIViewController, title: String, normalImage: UIImage?, selectedImageName: UIImage?) {

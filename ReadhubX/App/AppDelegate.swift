@@ -50,10 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 3D Touch ShortcutItem
         let shortcutItems: [UIApplicationShortcutItem] = [
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemTopic, localizedTitle: AppConfig.moduleTopic, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "topic"), userInfo: nil),
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemNews, localizedTitle: AppConfig.moduleNews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "news"), userInfo: nil),
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemTechnews, localizedTitle: AppConfig.moduleTechnews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "news"), userInfo: nil),
-            UIApplicationShortcutItem(type: AppConfig.shortcutItemBlockchain, localizedTitle: AppConfig.moduleBlockchain, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "news"), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemTopic, localizedTitle: AppConfig.moduleTopic, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "tabbar_topic"), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemNews, localizedTitle: AppConfig.moduleNews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "tabbar_news"), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemTechnews, localizedTitle: AppConfig.moduleTechnews, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "tabbar_news"), userInfo: nil),
+            UIApplicationShortcutItem(type: AppConfig.shortcutItemBlockchain, localizedTitle: AppConfig.moduleBlockchain, localizedSubtitle: nil, icon: UIApplicationShortcutIcon(templateImageName: "tabbar_news"), userInfo: nil),
         ]
         
         UIApplication.shared.shortcutItems = shortcutItems

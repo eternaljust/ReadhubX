@@ -17,6 +17,8 @@ class TopicDetailViewController: UIViewController {
     private var topicDetail: TopicDetailModel?
     /// 新闻列表数据源
     private var newsArray: [TopicDetailModel.TopicDetailNewsModel] = []
+    /// 复制分享链接
+    private var copyShareURL: String?
     
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -24,6 +26,9 @@ class TopicDetailViewController: UIViewController {
         
         self.viewControllerConfig()
         navigationItem.title = "话题详情"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "more"), style: .plain, target: self, action: #selector(more))
+        
+        copyShareURL = "https://readhub.cn/topic/\(topicID)"
         
         setupUI()
         layoutPageSubviews()
@@ -81,6 +86,23 @@ class TopicDetailViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func more() {
+        let actionSheet = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "复制链接", style: .default, handler: { _ in
+            self.copyLink()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "分享", style: .default, handler: { _ in
+            self.systemShare()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
+            
+        }))
+        actionSheet.view.tintColor = color_theme
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
  
     // MARK: - private method
     private func loadData() {
@@ -122,6 +144,29 @@ class TopicDetailViewController: UIViewController {
             return false
         }
         return false
+    }
+    
+    private func copyLink() {
+        UIPasteboard.general.string = self.copyShareURL
+        
+        HUD.flash(.label("已复制"), delay: AppConfig.HUDTextDelay)
+    }
+    
+    private func systemShare() {
+        let vc = UIActivityViewController(
+            activityItems: [
+                topicDetail?.title ?? "Readhub 话题",
+                #imageLiteral(resourceName: "app_logo"),
+                URL(string: copyShareURL!) as Any],
+            applicationActivities: [])
+        
+        // 解决 iPad 分享奔溃
+        if iPad {
+            vc.popoverPresentationController?.sourceView = view
+            vc.popoverPresentationController?.sourceRect = view.frame
+        }
+        
+        currentViewController().present(vc, animated: true, completion: nil)
     }
     
     private func setupUI() {
@@ -276,5 +321,24 @@ extension TopicDetailViewController: UITableViewDelegate {
         }
         
         return header
+    }
+}
+
+// MARK: - Peek && Pop
+extension TopicDetailViewController {
+    override var previewActionItems: [UIPreviewActionItem] {
+        let copyAction = UIPreviewAction(
+            title: "复制链接",
+            style: .default) { [weak self] action, vc in
+                self?.copyLink()
+        }
+        
+        let shareAction = UIPreviewAction(
+            title: "分享",
+            style: .default) { [weak self] action, vc in
+                self?.systemShare()
+        }
+        
+        return [copyAction, shareAction]
     }
 }

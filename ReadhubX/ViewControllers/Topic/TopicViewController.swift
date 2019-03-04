@@ -66,6 +66,14 @@ class TopicViewController: UIViewController {
         tableView.reloadData()
     }
     
+    private func addHistory(indexPath: IndexPath) {
+        let topic = list[indexPath.row]
+
+        // 增加一条话题历史记录
+        SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, summary: topic.summary, publishDate: topic.createdAt, extra: "")
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
     // MARK: - private method
     private func loadData() {
         let url = api_base + api_topic + api_arg
@@ -166,6 +174,11 @@ extension TopicViewController: UITableViewDataSource {
         cell.titleLabel.textColor = history ? color_888888 : color_000000
         cell.summaryLabel.textColor = history ? color_888888 : color_353535
         
+        // 3D Touch
+        if self.traitCollection.forceTouchCapability == .available {
+            self.registerForPreviewing(with: self, sourceView: tableView)
+        }
+        
         return cell
     }
 }
@@ -173,12 +186,10 @@ extension TopicViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension TopicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let topic = list[indexPath.row]
-        
         // 增加一条话题历史记录
-        SQLiteDBService.shared.addHistory(id: topic.id, type: 0, title: topic.title, time: Date().timeIntervalSince1970, url: "", language: AppConfig.cnLanguage, summary: topic.summary, publishDate: topic.createdAt, extra: "")
-        tableView.reloadRows(at: [indexPath], with: .none)
+        addHistory(indexPath: indexPath)
         
+        let topic = list[indexPath.row]
         let vc = TopicDetailViewController()
 
         vc.topicID = topic.id
@@ -212,5 +223,28 @@ extension TopicViewController: EmptyDataSetSource {
 extension TopicViewController: EmptyDataSetDelegate {
     func emptyDataSet(_ scrollView: UIScrollView, didTapButton button: UIButton) {
         tableView.triggerRefreshing()
+    }
+}
+
+// MARK: - UIViewControllerPreviewingDelegate
+extension TopicViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        show(viewControllerToCommit, sender: self)
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRow(at: location),
+            let cell = tableView.cellForRow(at: indexPath) else { return nil }
+        previewingContext.sourceRect = cell.frame
+
+        // 增加一条话题历史记录
+        addHistory(indexPath: indexPath)
+        
+        let topic = list[indexPath.row]
+        let viewController = TopicDetailViewController()
+        
+        viewController.topicID = topic.id
+        
+        return viewController
     }
 }
