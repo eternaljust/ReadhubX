@@ -1,8 +1,9 @@
+
 //
-//  HistoryViewController.swift
+//  CollectionViewController.swift
 //  ReadhubX
 //
-//  Created by Awro on 2019/2/24.
+//  Created by Awro on 2019/3/5.
 //  Copyright © 2019 EJ. All rights reserved.
 //
 
@@ -10,18 +11,17 @@ import UIKit
 import EmptyDataSet_Swift
 import PKHUD
 
-/// 浏览历史记录 ViewController
-class HistoryViewController: UIViewController {
+/// 话题收藏 ViewController
+class CollectionViewController: UIViewController {
     /// 列表数据源
-    var list: [HistoryModel] = []
+    var list: [CollectionModel] = []
     
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.viewControllerConfig()
-        navigationItem.title = "浏览历史"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "delete"), style: .plain, target: self, action: #selector(deleteHistory))
+        navigationItem.title = "话题收藏"
         
         setupUI()
         layoutPageSubviews()
@@ -34,18 +34,18 @@ class HistoryViewController: UIViewController {
     }
     
     // MARK: - event response
-    @objc private func deleteHistory() {
-        let alertVC = UIAlertController(title: "清空浏览历史？", message: nil, preferredStyle: .alert)
+    private func cancelCollection(indexPath: IndexPath) {
+        let alertVC = UIAlertController(title: "确认取消收藏？", message: nil, preferredStyle: .alert)
+        let collection = list[indexPath.row]
         
         alertVC.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
             
         }))
-        alertVC.addAction(UIAlertAction(title: "清空", style: .destructive, handler: { _ in
-            SQLiteDBService.shared.deleteHistory()
-            NotificationCenter.default.post(Notification(name: .DeleteHistoryReload))
+        alertVC.addAction(UIAlertAction(title: "确认", style: .destructive, handler: { _ in
+            let success = SQLiteDBService.shared.deleteCollection(id: collection.id)
             
-            HUD.flash(.label("已清空！"), delay: AppConfig.HUDTextDelay)
-
+            HUD.flash(.label(success ? "取消收藏成功！" : "取消收藏失败！"), delay: AppConfig.HUDTextDelay)
+            
             self.loadData()
         }))
         
@@ -54,25 +54,14 @@ class HistoryViewController: UIViewController {
     
     // MARK: - private method
     private func loadData() {
-        let histories = SQLiteDBService.shared.searchAllHistory()
-        // 是否过滤科技动态英文新闻
-        let off = UserDefaults.standard.string(forKey: AppConfig.englishSwitchOff)
-        
-        list = histories.filter({ (history) -> Bool in
-            if off != nil {
-                return history.language == AppConfig.cnLanguage
-            }
-            return true
-        })
+        list = SQLiteDBService.shared.searchAllCollection()
         
         if list.count == 0 {
             tableView.emptyDataSetSource = self
-            
-            navigationItem.rightBarButtonItem = nil
         }
         
         // 记录条数
-        countLabel.text = "已记录 \(list.count) 条"
+        countLabel.text = "已收藏 \(list.count) 条"
         countLabel.isHidden = true
         
         tableView.reloadData()
@@ -107,7 +96,7 @@ class HistoryViewController: UIViewController {
         tableView.separatorInset = .zero
         tableView.tableFooterView = UIView()
         
-        tableView.register(HistoryCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CollectionCell.self, forCellReuseIdentifier: "cell")
         
         return tableView
     }()
@@ -127,55 +116,51 @@ class HistoryViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension HistoryViewController: UITableViewDataSource {
+extension CollectionViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: HistoryCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HistoryCell
-        let history = list[indexPath.row]
+        let cell: CollectionCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CollectionCell
+        let collection = list[indexPath.row]
         
-        cell.titleLabel.text = history.title
-        
-        let time: String = String.historyTime(timeStamp: history.time)
-        let type: String = history.type == 0 ? "「话题」" : "「资讯」"
-        cell.infoLabel.text = "\(type) \(time)"
+        cell.titleLabel.text = collection.title
         
         return cell
     }
 }
 
 // MARK: - UITableViewDelegate
-extension HistoryViewController: UITableViewDelegate {
+extension CollectionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let history = list[indexPath.row]
+        let collection = list[indexPath.row]
         
-        if history.type == 1 {
-            let vc = NewsDetailViewController()
-            
-            vc.newsTitle = history.title
-            vc.newsSummary = history.summary
-            vc.newsPublishDate = history.publishDate
-            vc.newsURL = history.url
-
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let vc = TopicDetailViewController()
-            
-            vc.topicID = history.id
-            
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = TopicDetailViewController()
+        
+        vc.topicID = collection.id
+        
+        self.navigationController?.pushViewController(vc, animated: true)
         
         // 更新历史记录时间
-        SQLiteDBService.shared.updateHistory(id: history.id, time: Date().timeIntervalSince1970)
+        SQLiteDBService.shared.updateHistory(id: collection.id, time: Date().timeIntervalSince1970)
         tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let cancelAction = UITableViewRowAction(
+            style: .destructive,
+            title: "取消收藏") { _, indexPath in
+                self.cancelCollection(indexPath: indexPath)
+        }
+        
+        return [cancelAction]
     }
 }
 
 // MARK: - EmptyDataSetSource
-extension HistoryViewController: EmptyDataSetSource {
+extension CollectionViewController: EmptyDataSetSource {
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let title: NSAttributedString = NSAttributedString.init(string: "暂无数据", attributes: [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue): font_17, NSAttributedString.Key.foregroundColor: color_000000])
         
@@ -184,7 +169,7 @@ extension HistoryViewController: EmptyDataSetSource {
 }
 
 // MARK: -
-extension HistoryViewController: UIScrollViewDelegate {
+extension CollectionViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
         

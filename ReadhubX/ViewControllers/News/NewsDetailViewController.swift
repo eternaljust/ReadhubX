@@ -18,6 +18,8 @@ class NewsDetailViewController: UIViewController {
     var newsSummary: String?
     /// 资讯发布时间
     var newsPublishDate: String?
+    /// 资讯 url
+    var newsURL: String?
     
     // MARK: - life cycle
     override func viewDidLoad() {
@@ -26,9 +28,45 @@ class NewsDetailViewController: UIViewController {
         self.viewControllerConfig()
         view.backgroundColor = color_ffffff
         navigationItem.title = "资讯详情"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "more"), style: .plain, target: self, action: #selector(more))
 
         setupUI()
         layoutPageSubviews()
+    }
+    
+    // MARK: - event response
+    @objc private func more() {
+        let actionSheet = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "分享", style: .default, handler: { _ in
+            self.systemShare()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
+            
+        }))
+        actionSheet.view.tintColor = color_theme
+        // 解决 iPad 奔溃
+        if iPad {
+            actionSheet.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    private func systemShare() {
+        let vc = UIActivityViewController(
+            activityItems: [
+                newsTitle ?? "Readhub 资讯",
+                #imageLiteral(resourceName: "app_logo"),
+                URL(string: newsURL!) as Any],
+            applicationActivities: [])
+        
+        // 解决 iPad 分享奔溃
+        if iPad {
+            vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        currentViewController().present(vc, animated: true, completion: nil)
     }
     
     // MARK: - private method

@@ -17,6 +17,8 @@ class MoreViewController: UIViewController {
         case topic
         /// 科技动态英文新闻
         case english
+        /// 话题收藏
+        case collection
         /// 浏览历史
         case history
         
@@ -69,6 +71,10 @@ class MoreViewController: UIViewController {
         onEnglishSwitch()
     }
     
+    private func gotoTopicCollection() {
+        self.navigationController?.pushViewController(CollectionViewController(), animated: true)
+    }
+    
     private func gotoBrowseHistory() {
         self.navigationController?.pushViewController(HistoryViewController(), animated: true)
     }
@@ -89,8 +95,10 @@ class MoreViewController: UIViewController {
         
         // 解决 iPad 分享奔溃
         if iPad {
+            let cell = tableView.cellForRow(at: IndexPath(item: 0, section: 1))
+            
             vc.popoverPresentationController?.sourceView = view
-            vc.popoverPresentationController?.sourceRect = view.frame
+            vc.popoverPresentationController?.sourceRect = cell?.frame ?? view.frame
         }
         
         self.present(vc, animated: true, completion: nil)
@@ -172,7 +180,8 @@ class MoreViewController: UIViewController {
         return [
             [
                 MoreItem(title: "热门话题摘要", type: .topic),
-//                MoreItem(title: "科技动态英文新闻", type: .english),
+                MoreItem(title: "科技动态英文新闻", type: .english),
+                MoreItem(title: "话题收藏", type: .collection),
                 MoreItem(title: "浏览历史", type: .history)
             ],
             [
@@ -230,6 +239,8 @@ extension MoreViewController: UITableViewDelegate {
         let item = dataSource[indexPath.section][indexPath.row]
         
         switch item.type {
+        case .collection:
+            gotoTopicCollection()
         case .history:
             gotoBrowseHistory()
             

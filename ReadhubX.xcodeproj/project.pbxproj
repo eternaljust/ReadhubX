@@ -15,6 +15,9 @@
 		8105F8F0221EC838001E3867 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8EF221EC838001E3867 /* NavigationViewController.swift */; };
 		8105F8F2221ECFFA001E3867 /* URLSchemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */; };
 		8105F8F4221ED01A001E3867 /* PodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F8F3221ED01A001E3867 /* PodsViewController.swift */; };
+		811ECB3B222E1A970070E99C /* CollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811ECB3A222E1A970070E99C /* CollectionModel.swift */; };
+		811ECB3D222E215A0070E99C /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811ECB3C222E215A0070E99C /* CollectionViewController.swift */; };
+		811ECB3F222E22480070E99C /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811ECB3E222E22480070E99C /* CollectionCell.swift */; };
 		8123B745222520CC00503FAE /* TopicInstantviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8123B744222520CC00503FAE /* TopicInstantviewViewController.swift */; };
 		8123B7472225274500503FAE /* TopicInstantviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8123B7462225274500503FAE /* TopicInstantviewHeaderView.swift */; };
 		813AAB38222262BF00A2F680 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813AAB37222262BF00A2F680 /* HistoryModel.swift */; };
@@ -88,6 +91,9 @@
 		8105F8EF221EC838001E3867 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemesViewController.swift; sourceTree = "<group>"; };
 		8105F8F3221ED01A001E3867 /* PodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodsViewController.swift; sourceTree = "<group>"; };
+		811ECB3A222E1A970070E99C /* CollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionModel.swift; sourceTree = "<group>"; };
+		811ECB3C222E215A0070E99C /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		811ECB3E222E22480070E99C /* CollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		8123B744222520CC00503FAE /* TopicInstantviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicInstantviewViewController.swift; sourceTree = "<group>"; };
 		8123B7462225274500503FAE /* TopicInstantviewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicInstantviewHeaderView.swift; sourceTree = "<group>"; };
 		813AAB37222262BF00A2F680 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
@@ -311,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				81F3BF0A221ABEA70069DD7F /* MoreViewController.swift */,
+				811ECB3C222E215A0070E99C /* CollectionViewController.swift */,
 				813AAB3B22229B8C00A2F680 /* HistoryViewController.swift */,
 				8105F8E9221EA45B001E3867 /* AboutViewController.swift */,
 				8105F8F1221ECFFA001E3867 /* URLSchemesViewController.swift */,
@@ -346,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				813AAB3D22229D5600A2F680 /* HistoryCell.swift */,
+				811ECB3E222E22480070E99C /* CollectionCell.swift */,
 				8105F8EB221EA4A8001E3867 /* AboutHeaderView.swift */,
 			);
 			path = More;
@@ -378,6 +386,7 @@
 				8153BCBD222143AA009F8EF6 /* TopicDetailModel.swift */,
 				81806D04221BF07A00DA827D /* NewsModel.swift */,
 				813AAB37222262BF00A2F680 /* HistoryModel.swift */,
+				811ECB3A222E1A970070E99C /* CollectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -661,10 +670,12 @@
 				8153BCBA222121AE009F8EF6 /* TopicModel.swift in Sources */,
 				81B49CAC222A134A00547CE1 /* NewsDetailCell.swift in Sources */,
 				81F3BEEF221A85190069DD7F /* UIView+Extension.swift in Sources */,
+				811ECB3F222E22480070E99C /* CollectionCell.swift in Sources */,
 				81F3BEF1221A86FB0069DD7F /* UIImage+Extension.swift in Sources */,
 				8123B7472225274500503FAE /* TopicInstantviewHeaderView.swift in Sources */,
 				81F3BF0F221ABEDF0069DD7F /* NewsCell.swift in Sources */,
 				81F3BF09221ABE9A0069DD7F /* NewsViewController.swift in Sources */,
+				811ECB3D222E215A0070E99C /* CollectionViewController.swift in Sources */,
 				81F3BF0D221ABEC00069DD7F /* TopicCell.swift in Sources */,
 				8123B745222520CC00503FAE /* TopicInstantviewViewController.swift in Sources */,
 				81806D05221BF07A00DA827D /* NewsModel.swift in Sources */,
@@ -679,6 +690,7 @@
 				81AE90F02227802800660FB2 /* NewsDetailViewController.swift in Sources */,
 				81AE90F2222786B200660FB2 /* NewsDetailHeaderView.swift in Sources */,
 				81F3BEE8221A66DF0069DD7F /* AppConstants.swift in Sources */,
+				811ECB3B222E1A970070E99C /* CollectionModel.swift in Sources */,
 				8105F8EC221EA4A8001E3867 /* AboutHeaderView.swift in Sources */,
 				8105F8EE221EB12D001E3867 /* BaseSafariViewController.swift in Sources */,
 				8105F8E6221E4914001E3867 /* NewsListViewController.swift in Sources */,

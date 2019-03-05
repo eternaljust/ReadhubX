@@ -141,6 +141,11 @@ class TopicViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.register(TopicCell.self, forCellReuseIdentifier: "cell")
         
+        // 3D Touch
+        if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: tableView)
+        }
+        
         tableView.gtm_addRefreshHeaderView {
             self.loadData()
         }
@@ -173,11 +178,6 @@ extension TopicViewController: UITableViewDataSource {
         let history: Bool = SQLiteDBService.shared.searchHistory(id: topic.id)
         cell.titleLabel.textColor = history ? color_888888 : color_000000
         cell.summaryLabel.textColor = history ? color_888888 : color_353535
-        
-        // 3D Touch
-        if self.traitCollection.forceTouchCapability == .available {
-            self.registerForPreviewing(with: self, sourceView: tableView)
-        }
         
         return cell
     }

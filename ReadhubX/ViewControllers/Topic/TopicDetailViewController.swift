@@ -90,16 +90,22 @@ class TopicDetailViewController: UIViewController {
     @objc private func more() {
         let actionSheet = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "复制链接", style: .default, handler: { _ in
-            self.copyLink()
+        actionSheet.addAction(UIAlertAction(title: collectionTitle(), style: .default, handler: { _ in
+            self.topicCollection()
         }))
+//        actionSheet.addAction(UIAlertAction(title: "复制链接", style: .default, handler: { _ in
+//            self.copyLink()
+//        }))
         actionSheet.addAction(UIAlertAction(title: "分享", style: .default, handler: { _ in
             self.systemShare()
         }))
         actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
             
         }))
-        actionSheet.view.tintColor = color_theme
+        // 解决 iPad 奔溃
+        if iPad {
+            actionSheet.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
         
         self.present(actionSheet, animated: true, completion: nil)
     }
@@ -146,6 +152,24 @@ class TopicDetailViewController: UIViewController {
         return false
     }
     
+    private func collectionTitle() -> String {
+        return SQLiteDBService.shared.searchCollection(id: topicID) ? "取消收藏" : "收藏"
+    }
+    
+    private func topicCollection() {
+        let collection = SQLiteDBService.shared.searchCollection(id: topicID)
+        
+        if collection == false {
+           let success = SQLiteDBService.shared.addCollection(id: topicID, title: topicDetail?.title ?? "话题", time: Date().timeIntervalSince1970, extra: "")
+            
+            HUD.flash(.label(success ? "收藏成功！" : "收藏失败！"), delay: AppConfig.HUDTextDelay)
+        } else {
+            let success = SQLiteDBService.shared.deleteCollection(id: topicID)
+            
+            HUD.flash(.label(success ? "取消收藏成功！" : "取消收藏失败！"), delay: AppConfig.HUDTextDelay)
+        }
+    }
+    
     private func copyLink() {
         UIPasteboard.general.string = self.copyShareURL
         
@@ -162,8 +186,7 @@ class TopicDetailViewController: UIViewController {
         
         // 解决 iPad 分享奔溃
         if iPad {
-            vc.popoverPresentationController?.sourceView = view
-            vc.popoverPresentationController?.sourceRect = view.frame
+            vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         }
         
         currentViewController().present(vc, animated: true, completion: nil)
@@ -282,7 +305,8 @@ extension TopicDetailViewController: UITableViewDelegate {
             vc.newsTitle = news!.title
             vc.newsSummary = ""
             vc.newsPublishDate = news?.publishDate
-            
+            vc.newsURL = news?.mobileUrl
+
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
             let topic = topicDetail?.timeline?.topics[indexPath.row]
@@ -327,10 +351,16 @@ extension TopicDetailViewController: UITableViewDelegate {
 // MARK: - Peek && Pop
 extension TopicDetailViewController {
     override var previewActionItems: [UIPreviewActionItem] {
-        let copyAction = UIPreviewAction(
-            title: "复制链接",
+//        let copyAction = UIPreviewAction(
+//            title: "复制链接",
+//            style: .default) { [weak self] action, vc in
+//                self?.copyLink()
+//        }
+        
+        let collectionAction = UIPreviewAction(
+            title: collectionTitle(),
             style: .default) { [weak self] action, vc in
-                self?.copyLink()
+                self?.topicCollection()
         }
         
         let shareAction = UIPreviewAction(
@@ -339,6 +369,6 @@ extension TopicDetailViewController {
                 self?.systemShare()
         }
         
-        return [copyAction, shareAction]
+        return [collectionAction, shareAction]
     }
 }

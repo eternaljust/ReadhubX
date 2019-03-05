@@ -211,6 +211,7 @@ extension NewsListViewController: UITableViewDelegate {
         vc.newsTitle = news.title
         vc.newsSummary = news.summary
         vc.newsPublishDate = news.publishDate
+        vc.newsURL = news.mobileUrl
         
         viewController!.navigationController?.pushViewController(vc, animated: true)
     }

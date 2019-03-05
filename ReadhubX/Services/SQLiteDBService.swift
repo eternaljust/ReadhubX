@@ -31,12 +31,23 @@ class SQLiteDBService: NSObject {
     /// 历史记录 extra 预留额外的扩展字段：json 字符串
     private let history_extra_column = Expression<String>("extra")
     
+    /// 话题收藏时间戳
+    private let collection_time_column = Expression<TimeInterval>("time")
+    /// 话题收藏标题
+    private let collection_title_column = Expression<String>("title")
+    /// 话题收藏 id
+    private let collection_id_column = Expression<String>("id")
+    /// 话题收藏 extra 预留额外的扩展字段：json 字符串
+    private let collection_extra_column = Expression<String>("extra")
+    
     /// 单例
     static let shared = SQLiteDBService()
     /// 数据库
     private var db: Connection?
     /// 历史记录表
     private var historyTable: Table?
+    /// 话题收藏表
+    private var collectionTable: Table?
     
     // MARK: - private method
     /// 当前数据库
@@ -70,6 +81,23 @@ class SQLiteDBService: NSObject {
             return historyTable!
         }
         return historyTable!
+    }
+    
+    /// 收藏话题表
+    private func getCollectionTable() -> Table {
+        if collectionTable == nil {
+            collectionTable = Table("collection")
+            
+            _ = try? getDB().run(getCollectionTable().create { t in
+                t.column(collection_id_column, primaryKey: true)
+                t.column(collection_time_column)
+                t.column(collection_title_column)
+                t.column(collection_extra_column)
+            })
+            
+            return collectionTable!
+        }
+        return collectionTable!
     }
     
     // MARK: - public method
@@ -130,6 +158,59 @@ class SQLiteDBService: NSObject {
     func searchHistory(id: String) -> Bool {
         let query = getHistoryTable().filter(history_id_column == id)
 
+        if let count = try? getDB().scalar(query.count) {
+            return count == 1
+        }
+        return false
+    }
+    
+    /// 增一条话题收藏记录(extra 预留额外的扩展字段：json 字符串)
+    func addCollection(id: String, title: String, time: TimeInterval, extra: String) -> Bool  {
+        // 是否已经收藏
+        if searchCollection(id: id) {
+            return false
+        }
+        
+        let insert = getCollectionTable().insert(collection_time_column <- time, collection_id_column <- id, collection_title_column <- title, collection_extra_column <- extra)
+        if let rowId = try? getDB().run(insert) {
+            DLog(msg: "插入成功：\(rowId)")
+            return true
+        } else {
+            DLog(msg: "插入失败")
+            return false
+        }
+    }
+    
+    /// 删除一条话题收藏
+    func deleteCollection(id: String) -> Bool {
+        let delete = getCollectionTable().filter(collection_id_column == id).delete()
+        
+        if let count = try? getDB().run(delete) {
+            DLog(msg: "删除的条数为：\(count)")
+            return true
+        } else {
+            DLog(msg: "删除失败")
+            return false
+        }
+    }
+    
+    /// 查找所有的话题收藏
+    func searchAllCollection() -> [CollectionModel] {
+        var collections = [CollectionModel]()
+        
+        for column in try! getDB().prepare(getCollectionTable().order(collection_time_column.desc)) {
+            collections.append(CollectionModel(id: column[collection_id_column], title: column[collection_title_column], time: column[collection_time_column], extra: column[collection_extra_column]))
+            
+            DLog(msg: "searchAllCollection id: \(column[collection_id_column]), title: \(column[collection_title_column]), time: \(column[collection_time_column]), extra: \(column[collection_extra_column])")
+        }
+        
+        return collections
+    }
+    
+    /// 查找一条话题收藏
+    func searchCollection(id: String) -> Bool {
+        let query = getCollectionTable().filter(collection_id_column == id)
+        
         if let count = try? getDB().scalar(query.count) {
             return count == 1
         }

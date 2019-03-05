@@ -22,13 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // 初始化 主 window
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .white
+        window?.backgroundColor = color_ffffff
+        window?.tintColor = color_theme
         window?.rootViewController = TabBarViewController()
         rootViewController = (window?.rootViewController as! TabBarViewController)
         window?.makeKeyAndVisible()
         
         // 暂时关闭英文资讯展示
-        UserDefaults.standard.set("1", forKey: AppConfig.englishSwitchOff)
+//        UserDefaults.standard.set("1", forKey: AppConfig.englishSwitchOff)
         
         /// 第一次或者更新版本之后打开 App
         let vc = StartViewController()
