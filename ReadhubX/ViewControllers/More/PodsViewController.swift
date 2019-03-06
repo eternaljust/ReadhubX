@@ -67,7 +67,7 @@ class PodsViewController: UIViewController {
                 PodsItem(title: "SnapKit", url: "https://github.com/SnapKit/SnapKit")
             ],
             [
-                PodsItem(title: "Bugly", url: "https://bugly.qq.com")
+                PodsItem(title: "Firebase", url: "https://firebase.google.com/")
             ]
         ]
     }()

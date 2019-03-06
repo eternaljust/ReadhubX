@@ -234,8 +234,6 @@ struct AppConfig {
     static let url: String = "https://itunes.apple.com/app/id1454381627"
     /// App Store 的评分链接
     static let gradeURL: String = "itms-apps://itunes.apple.com/app/id1454381627?mt=8&action=write-review"
-    /// App 奔溃信息收集 Bugly AppId
-    static let BuglyAppId: String = "9f506f0ca2"
     
     /// 收件人邮箱
     static let receiverEmail: String = "eternal.just@gmail.com"

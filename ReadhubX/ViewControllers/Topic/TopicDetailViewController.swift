@@ -253,6 +253,10 @@ extension TopicDetailViewController: UITableViewDataSource {
                 let date: Date = topicDetail!.createdAt.date()!
                 let time: String = String.currennTime(timeStamp: date.timeIntervalSince1970, isTopic: true)
                 cell.timeLabel.text = time
+                
+                // 即时查看
+                cell.instantviewButton.isHidden = topicDetail?.hasInstantView == true ? false : true
+                cell.instantviewButton.addTarget(self, action: #selector(loadInstantview), for: .touchUpInside)
             }
             
             return cell

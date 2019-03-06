@@ -27,6 +27,7 @@ class TopicDetailCell: UITableViewCell {
     private func setupUI() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(timeLabel)
+        contentView.addSubview(instantviewButton)
         contentView.addSubview(summaryLabel)
         
         layoutPageSubviews()
@@ -43,6 +44,12 @@ class TopicDetailCell: UITableViewCell {
             make.top.equalTo(titleLabel.snp.bottom).offset(width_list_space_15)
             make.left.equalTo(titleLabel)
             make.height.equalTo(14)
+        }
+        
+        instantviewButton.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(-width_list_space_15)
+            make.centerY.equalTo(timeLabel)
+            make.size.equalTo(CGSize(width: 32, height: 32))
         }
         
         summaryLabel.snp.makeConstraints { (make) in
@@ -83,6 +90,15 @@ class TopicDetailCell: UITableViewCell {
         label.textColor = color_888888
         
         return label
+    }()
+    
+    /// 话题的即时查看
+    lazy var instantviewButton: UIButton = {
+        let button = UIButton()
+        
+        button.setBackgroundImage(#imageLiteral(resourceName: "instantview"), for: .normal)
+        
+        return button
     }()
 }
 

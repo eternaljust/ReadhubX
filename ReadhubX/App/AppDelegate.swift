@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import Bugly
+import Firebase
+import Fabric
 
 @UIApplicationMain
 
@@ -59,8 +60,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.shared.shortcutItems = shortcutItems
         
-        // 奔溃信息收集 Bugly
-        Bugly.start(withAppId: AppConfig.BuglyAppId)
+        // 奔溃信息收集 Firebase Crashlytics
+        FirebaseApp.configure()
+        Fabric.sharedSDK().debug = true
         
         return true
     }
